@@ -1,6 +1,6 @@
 package graph
 
-import "adventofcode2016/pkg/utils"
+import "adventofcode2024/pkg/utils"
 
 type Graph[T comparable] struct {
 	edges map[T]map[T]float64

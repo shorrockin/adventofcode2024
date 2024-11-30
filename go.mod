@@ -1,4 +1,4 @@
-module adventofcode2016
+module adventofcode2024
 
 go 1.23.2
 

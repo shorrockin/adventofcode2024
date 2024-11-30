@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"adventofcode2016/pkg/assert"
-	"adventofcode2016/pkg/utils"
+	"adventofcode2024/pkg/assert"
+	"adventofcode2024/pkg/utils"
 )
 
 func BFS[T comparable](start T, neighbors func(from T) []T, complete func(at T) bool) ([]T, bool) {

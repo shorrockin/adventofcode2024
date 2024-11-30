@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"adventofcode2016/pkg/assert"
+	"adventofcode2024/pkg/assert"
 	"bufio"
 	"log"
 	"os"
