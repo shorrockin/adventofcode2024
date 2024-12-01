@@ -11,8 +11,8 @@ import (
 type Part int
 
 const (
-	Part1 Part = iota
-	Part2
+	PartOne Part = iota
+	PartTwo
 )
 
 func Solve(path string, part Part) int {
@@ -26,7 +26,7 @@ func Solve(path string, part Part) int {
 		right = append(right, utils.MustAtoi(ints[1]))
 	}
 
-	if part == Part1 {
+	if part == PartOne {
 		slices.Sort(left)
 		slices.Sort(right)
 

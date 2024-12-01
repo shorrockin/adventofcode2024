@@ -1,5 +1,22 @@
 package {{DAY}}
 
-func Solve(path string) int {
+import (
+	"adventofcode2024/pkg/utils"
+	"strings"
+)
+
+type Part int
+
+const (
+	PartOne Part = iota
+	PartTwo
+)
+
+func Solve(path string, part Part) int {
+	for _, line := range utils.MustReadInput(path) {
+		// parts := strings.Fields(line)
+		// ints := utils.Map(parts, utils.MustAtoi)
+		// TODO
+	}
     return 0
 }
