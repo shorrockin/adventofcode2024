@@ -91,6 +91,16 @@ func Find[T any](input []T, selector func(T) bool) T {
 	return zero
 }
 
+func Count[T any](input []T, selector func(T) bool) int {
+	count := 0
+	for _, value := range input {
+		if selector(value) {
+			count++
+		}
+	}
+	return count
+}
+
 func Any[T any](input []T, selector func(T) bool) bool {
 	for _, value := range input {
 		if selector(value) {
