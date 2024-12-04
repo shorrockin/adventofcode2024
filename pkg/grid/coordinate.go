@@ -27,3 +27,23 @@ func (g Coordinate) Intercardinals() []Coordinate {
 func (g Coordinate) Compass() []Coordinate {
 	return []Coordinate{g.North(), g.East(), g.NorthEast(), g.South(), g.SouthEast(), g.West(), g.SouthWest(), g.NorthWest()}
 }
+
+func (g Coordinate) Offset(offset Coordinate) Coordinate {
+	return Coordinate{g.X + offset.X, g.Y + offset.Y}
+}
+
+func (g Coordinate) Move(offset Coordinate, times int) Coordinate {
+	return Coordinate{g.X + offset.X*times, g.Y + offset.Y*times}
+}
+
+var (
+	North      = Coordinate{0, -1}
+	East       = Coordinate{1, 0}
+	South      = Coordinate{0, 1}
+	West       = Coordinate{-1, 0}
+	NorthWest  = Coordinate{-1, -1}
+	NorthEast  = Coordinate{1, -1}
+	SouthWest  = Coordinate{-1, 1}
+	SouthEast  = Coordinate{1, 1}
+	Directions = []Coordinate{North, East, South, West, NorthWest, NorthEast, SouthWest, SouthEast}
+)
