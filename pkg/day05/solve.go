@@ -44,9 +44,8 @@ func Solve(path string, part Part) int {
 func parse(path string) (map[string][]string, [][]string) {
 	updates := make([][]string, 0)
 	rules := make(map[string][]string)
-	lines := utils.MustReadInput(path)
 
-	for _, line := range lines {
+	for _, line := range utils.MustReadInput(path) {
 		if parts := strings.Split(line, "|"); len(parts) == 2 {
 			before, after := parts[0], parts[1]
 			rules[before] = append(rules[before], after)
