@@ -19,8 +19,9 @@ func logAssert(msg string, data ...any) {
 	os.Exit(1)
 }
 
-func Fail(msg string, data ...any) {
+func Fail(msg string, data ...any) int {
 	logAssert(msg, data...)
+	return 1
 }
 
 func Assert(truth bool, msg string, data ...any) {

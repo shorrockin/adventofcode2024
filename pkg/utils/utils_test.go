@@ -19,3 +19,12 @@ func TestReadInputError(t *testing.T) {
 	assert.Nil(t, lines)
 	assert.NotNil(t, err)
 }
+
+func TestKeys(t *testing.T) {
+	data := map[string]int{
+		"chris": 1,
+		"john":  2,
+		"jimbo": 3,
+	}
+	assert.Equal(t, []string{"chris", "john", "jimbo"}, Keys(data))
+}

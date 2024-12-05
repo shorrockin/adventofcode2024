@@ -39,7 +39,7 @@ func ReadInput(path string) ([]string, error) {
 
 func MustAtoi(raw string) int {
 	value, err := strconv.Atoi(raw)
-	assert.NoError(err, "could not convert value to number", raw)
+	assert.NoError(err, "could not convert value to number", "value", raw)
 	return value
 }
 
