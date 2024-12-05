@@ -43,7 +43,6 @@ func Solve(path string, part Part) int {
 
 func parse(path string) (map[string][]string, [][]string) {
 	updates := make([][]string, 0)
-	values := utils.NewSet[string]()
 	rules := make(map[string][]string)
 	lines := utils.MustReadInput(path)
 
@@ -51,7 +50,6 @@ func parse(path string) (map[string][]string, [][]string) {
 		if parts := strings.Split(line, "|"); len(parts) == 2 {
 			before, after := parts[0], parts[1]
 			rules[before] = append(rules[before], after)
-			values.AddAll(before, after)
 
 		} else if pages := strings.Split(line, ","); len(pages) > 1 {
 			assert.Equal(1, len(pages)%2, "expected updates to contain odd number")
