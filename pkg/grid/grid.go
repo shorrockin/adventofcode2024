@@ -22,23 +22,38 @@ func Parse[T any](lines []string, init func(value rune, x int, y int) T) Grid[T]
 	grid := NewGrid[T]()
 	for y, line := range lines {
 		for x, char := range line {
-			grid.Insert(x, y, init(char, x, y))
+			grid.InsertAt(x, y, init(char, x, y))
 		}
 	}
 	return grid
 }
 
 func (g Grid[T]) At(x int, y int) (Node[T], bool) {
-	return g.Get(Coordinate{x, y})
+	return g.Get(At(x, y))
 }
 
 func (g Grid[T]) MustAt(x int, y int) Node[T] {
-	return g.MustGet(Coordinate{x, y})
+	return g.MustGet(At(x, y))
 }
 
 func (g Grid[T]) Get(coordinate Coordinate) (Node[T], bool) {
 	value, ok := g[coordinate]
 	return value, ok
+}
+
+func (g Grid[T]) GetContents(coordinate Coordinate) (T, bool) {
+	value, ok := g[coordinate]
+	return value.Contents, ok
+}
+
+func (g Grid[T]) MustGetContents(coordinate Coordinate) T {
+	g.AssertPopulated(coordinate)
+	return g[coordinate].Contents
+}
+
+func (g Grid[T]) Contains(coordinate Coordinate) bool {
+	_, ok := g[coordinate]
+	return ok
 }
 
 func (g Grid[T]) MustGet(coordinate Coordinate) Node[T] {
@@ -55,9 +70,23 @@ func (g Grid[T]) GetAll(coordinates []Coordinate) []Node[T] {
 	return values
 }
 
-func (g Grid[T]) Insert(x int, y int, value T) {
-	coordinate := Coordinate{x, y}
+func (g Grid[T]) InsertAt(x, y int, value T) {
+	g.Insert(At(x, y), value)
+}
+
+func (g Grid[T]) Insert(coordinate Coordinate, value T) {
 	g.AssertEmpty(coordinate)
+	g[coordinate] = Node[T]{
+		Coordinate: coordinate,
+		Contents:   value,
+	}
+}
+
+func (g Grid[T]) ReplaceAt(x, y int, value T) {
+	g.Replace(At(x, y), value)
+}
+
+func (g Grid[T]) Replace(coordinate Coordinate, value T) {
 	g[coordinate] = Node[T]{
 		Coordinate: coordinate,
 		Contents:   value,
@@ -117,5 +146,5 @@ func (g Grid[T]) AssertPopulated(coordinate Coordinate) {
 
 func (g Grid[T]) AssertEmpty(coordinate Coordinate) {
 	_, ok := g[coordinate]
-	assert.False(ok, "expected value to not be populated at coordinate", coordinate)
+	assert.False(ok, "expected value to not be populated at coordinate", "coordinate", coordinate)
 }

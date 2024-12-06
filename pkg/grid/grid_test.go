@@ -5,12 +5,12 @@ import "github.com/stretchr/testify/assert"
 
 func TestGridAccess(t *testing.T) {
 	grid := NewGrid[string]()
-	grid.Insert(1, 1, "Center")
-	grid.Insert(0, 0, "NorthWest")
-	grid.Insert(1, 2, "South")
-	grid.Insert(2, 1, "East")
+	grid.InsertAt(1, 1, "Center")
+	grid.InsertAt(0, 0, "NorthWest")
+	grid.InsertAt(1, 2, "South")
+	grid.InsertAt(2, 1, "East")
 
-	coordinates := Coordinate{1, 1}.Compass()
+	coordinates := At(1, 1).Compass()
 	assert.Equal(t, 8, len(coordinates))
 
 	neighbors := grid.GetAll(coordinates)
@@ -25,6 +25,6 @@ func TestGridAccess(t *testing.T) {
 	_, ok = grid.At(-1, 1)
 	assert.False(t, ok)
 
-	grid.UpdateAt(Coordinate{1, 1}, "Chris")
-	assert.Equal(t, "Chris", grid.MustGet(Coordinate{1, 1}).Contents)
+	grid.UpdateAt(At(1, 1), "Chris")
+	assert.Equal(t, "Chris", grid.MustGet(At(1, 1)).Contents)
 }
