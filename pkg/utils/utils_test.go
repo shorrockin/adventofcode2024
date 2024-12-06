@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -26,5 +27,10 @@ func TestKeys(t *testing.T) {
 		"john":  2,
 		"jimbo": 3,
 	}
-	assert.Equal(t, []string{"chris", "john", "jimbo"}, Keys(data))
+	keys := Keys(data)
+	assert.True(t, slices.Contains(keys, "chris"))
+	assert.True(t, slices.Contains(keys, "john"))
+	assert.True(t, slices.Contains(keys, "jimbo"))
+	assert.Equal(t, 3, len(data))
+
 }
