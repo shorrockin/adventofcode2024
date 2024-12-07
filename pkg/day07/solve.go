@@ -13,27 +13,27 @@ type Equation struct {
 }
 
 func Solve(path string, partOne bool) int {
-	formulas := parse(path)
+	equations := parse(path)
 	sum := 0
 
-	for _, formula := range formulas {
-		solutions := []int{formula.input[0]}
+	for _, equation := range equations {
+		solutions := []int{equation.input[0]}
 
-		for inputIdx := 1; inputIdx < len(formula.input); inputIdx++ {
-			input := formula.input[inputIdx]
+		for iIdx := 1; iIdx < len(equation.input); iIdx++ {
+			input := equation.input[iIdx]
 
-			for idx, solution := range solutions {
+			for sIdx, solution := range solutions {
 				if !partOne {
 					joined := strconv.Itoa(solution) + strconv.Itoa(input)
 					solutions = append(solutions, utils.MustAtoi(joined))
 				}
 				solutions = append(solutions, solution*input)
-				solutions[idx] = solution + input
+				solutions[sIdx] = solution + input
 			}
 		}
 
-		if slices.Contains(solutions, formula.result) {
-			sum += formula.result
+		if slices.Contains(solutions, equation.result) {
+			sum += equation.result
 		}
 
 	}
