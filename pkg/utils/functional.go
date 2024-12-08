@@ -142,7 +142,7 @@ func Reduce[T any, K any](input []T, initial K, reducer func(current K, next T) 
 	return initial
 }
 
-func Chunx[T any](input []T, size int) [][]T {
+func Chunk[T any](input []T, size int) [][]T {
 	assert.Assert(size > 0, "chunk size must be greater than 0")
 	chunks := len(input) / size
 	if len(input)%chunks != 0 {
