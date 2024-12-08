@@ -13,7 +13,7 @@ func Solve(path string, partOne bool) int {
 	attenas := make(map[rune][]grid.Coordinate)
 	antinodes := utils.NewSet[grid.Coordinate]()
 
-	for y, line := range utils.MustReadInput(path) {
+	for y, line := range lines {
 		for x, char := range line {
 			if char != '.' {
 				attenas[char] = append(attenas[char], grid.At(x, y))
