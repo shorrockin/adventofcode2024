@@ -19,6 +19,5 @@ func TestPartTwoExample(t *testing.T) {
 }
 
 func TestPartTwoActual(t *testing.T) {
-	// not 8354941967530
-	assert.Equal(t, -1, Solve("input.txt", false))
+	assert.Equal(t, 6221662795602, Solve("input.txt", false))
 }
