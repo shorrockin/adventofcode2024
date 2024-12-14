@@ -47,6 +47,22 @@ func (g Coordinate) Move(offset Coordinate, times int) Coordinate {
 	return At(g.X+offset.X*times, g.Y+offset.Y*times)
 }
 
+func (g Coordinate) Bounded(x, y int) Coordinate {
+	if g.X >= x {
+		g.X = g.X % x
+	}
+	if g.Y >= y {
+		g.Y = g.Y % y
+	}
+	if g.X < 0 {
+		g.X = x + g.X
+	}
+	if g.Y < 0 {
+		g.Y = y + g.Y
+	}
+	return g
+}
+
 func (g Coordinate) String() string {
 	if g.label != "" {
 		return fmt.Sprintf("%v(x:%d,y:%d)", g.label, g.X, g.Y)
