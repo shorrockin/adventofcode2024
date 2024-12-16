@@ -85,6 +85,21 @@ func (g Coordinate) TurnRight() Coordinate {
 	}
 }
 
+func (g Coordinate) TurnLeft() Coordinate {
+	switch g {
+	case North:
+		return West
+	case East:
+		return North
+	case South:
+		return East
+	case West:
+		return South
+	default:
+		panic(assert.Fail("couldn't turn left, needs to be a cardinal direction", "dir", g))
+	}
+}
+
 var (
 	North      = At(0, -1).WithLabel("North")
 	East       = At(1, 0).WithLabel("East")
