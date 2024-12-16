@@ -37,11 +37,11 @@ func Solve(path string, partOne bool) int {
 	scores[Movement{start, grid.East}] = Score{0, utils.NewSetFrom(start)}
 
 	for !queue.IsEmpty() {
-		source := queue.MustDequeue()
+		origin := queue.MustDequeue()
 		movements := []Movement{
-			{source.position.Offset(source.facing), source.facing},
-			{source.position, source.facing.TurnLeft()},
-			{source.position, source.facing.TurnRight()},
+			{origin.position.Offset(origin.facing), origin.facing},
+			{origin.position, origin.facing.TurnLeft()},
+			{origin.position, origin.facing.TurnRight()},
 		}
 
 		for idx, movement := range movements {
@@ -50,42 +50,39 @@ func Solve(path string, partOne bool) int {
 				continue
 			}
 
-			score := scores[source].spawn(1, movement.position)
+			score := scores[origin].value + 1
 			if idx != 0 {
-				score.value = scores[source].value + 1000
+				score = scores[origin].value + 1000
 			}
 
-			if best, exists := scores[movement]; !exists || score.value <= best.value {
-				if score.value == best.value {
-					scores[movement].merge(score)
+			if best, exists := scores[movement]; !exists || score <= best.value {
+				if score == best.value {
+					for cord := range scores[origin].path {
+						best.path.Add(cord)
+					}
+					best.path.Add(movement.position)
 					continue
 				}
-				scores[movement] = score
+				scores[movement] = scores[origin].step(score, movement.position)
 				queue.Enqueue(movement)
 			}
 		}
 	}
 
-	score := findScoreAt(&scores, end)
+	score := findScoreAt(scores, end)
 	if partOne {
 		return score.value
 	}
 	return len(score.path)
 }
 
-func (s Score) merge(other Score) {
-	for _, cord := range other.path.Values() {
-		s.path.Add(cord)
-	}
-}
-
-func (s Score) spawn(value int, coord grid.Coordinate) Score {
-	path := s.path.Clone()
+func (s Score) step(value int, coord grid.Coordinate) Score {
+	path := s.path.Copy()
 	path.Add(coord)
-	return Score{s.value + value, path}
+	return Score{value, path}
 }
 
-func findScoreAt(scores *map[Movement]Score, position grid.Coordinate) Score {
+func findScoreAt(scores map[Movement]Score, position grid.Coordinate) Score {
 	best := Score{}
 	for _, movement := range []Movement{
 		{position, grid.East},
@@ -93,7 +90,7 @@ func findScoreAt(scores *map[Movement]Score, position grid.Coordinate) Score {
 		{position, grid.North},
 		{position, grid.South},
 	} {
-		if score, exists := (*scores)[movement]; exists && (best.value == 0 || score.value < best.value) {
+		if score, exists := scores[movement]; exists && (best.value == 0 || score.value < best.value) {
 			best = score
 		}
 	}

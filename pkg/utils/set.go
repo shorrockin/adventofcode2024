@@ -43,7 +43,3 @@ func (s Set[T]) Size() int {
 func (s Set[T]) Values() []T {
 	return Keys(s)
 }
-
-func (s Set[T]) Clone() Set[T] {
-	return CopyMap(s)
-}
