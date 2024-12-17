@@ -54,6 +54,20 @@ func CopySlice[T any](original []T) []T {
 	return copied
 }
 
+func EqualSlices[T comparable](a, b []T) bool {
+	if len(a) != len(b) {
+		return false
+	}
+
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
 func CopyMap[K comparable, V any](original map[K]V) map[K]V {
 	copy := make(map[K]V, len(original))
 	for key, value := range original {
