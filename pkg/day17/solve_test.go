@@ -19,5 +19,5 @@ func TestPartTwoExample(t *testing.T) {
 }
 
 func TestPartTwoActual(t *testing.T) {
-	assert.Equal(t, 105981155568026, PartTwo("input.txt"))
+	assert.Equal(t, -105981155568026, PartTwo("input.txt"))
 }

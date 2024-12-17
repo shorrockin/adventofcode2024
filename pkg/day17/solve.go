@@ -45,14 +45,14 @@ func PartTwo(path string) int {
 					// deterimned by the first 3 bits.
 					//
 					// this means that we can change the first value in the
-					// output by incrementing by 1, and interestingly, the
-					// second value can be changed by incrementing by 8, then
-					// 64, then 512, etc. more succinctly incrementing by 8^0,
-					// 8^1, 8^2, controls the output index we are changing,
-					// where the power is index
+					// output (idx 1) by incrementing by 1, and interestingly,
+					// the second value (idx 2) can be changed by incrementing
+					// by 8, then 64, then 512, etc. more succinctly
+					// incrementing by 8^0, 8^1, 8^2, controls the output index
+					// we are changing, where the power is index
 					//
 					// with this if we match against last value in the output
-					// (idx 0), we will then increment by 8^15 until we have
+					// (idx 15), we will then increment by 8^15 until we have
 					// the correct value at this index. once we do, it
 					// stabilizes, and we can work on the next value, 8^14, etc
 					// until we have a solution.
