@@ -64,8 +64,8 @@ func PartTwo(path string) int {
 					fmt.Printf("          value: %v\n", previous)
 					fmt.Printf("           next: %v\n", value)
 					fmt.Printf("      increment: 8^%d (%v)\n", idx, math.Pow(8, float64(idx)))
-					fmt.Printf(" binary current: %+v\n", strconv.FormatInt(int64(previous), 2))
-					fmt.Printf("binary previous: %+v\n", strconv.FormatInt(int64(value), 2))
+					fmt.Printf("binary previous: %+v\n", strconv.FormatInt(int64(previous), 2))
+					fmt.Printf(" binary current: %+v\n", strconv.FormatInt(int64(value), 2))
 					fmt.Println()
 
 					break
