@@ -14,6 +14,12 @@ func (q *Queue[T]) Enqueue(value T) {
 	q.list.PushBack(value)
 }
 
+func (q *Queue[T]) EnqueueAll(values ...T) {
+	for _, value := range values {
+		q.Enqueue(value)
+	}
+}
+
 func (q *Queue[T]) Dequeue() (T, bool) {
 	if q.list.Len() == 0 {
 		var zero T

@@ -3,6 +3,7 @@ package grid
 import (
 	"adventofcode2024/pkg/assert"
 	"fmt"
+	"math"
 )
 
 type Coordinate struct {
@@ -63,13 +64,6 @@ func (g Coordinate) Bounded(x, y int) Coordinate {
 	return g
 }
 
-func (g Coordinate) String() string {
-	if g.label != "" {
-		return fmt.Sprintf("%v(x:%d,y:%d)", g.label, g.X, g.Y)
-	}
-	return fmt.Sprintf("(x:%d,y:%d)", g.X, g.Y)
-}
-
 func (g Coordinate) TurnRight() Coordinate {
 	switch g {
 	case North:
@@ -98,6 +92,17 @@ func (g Coordinate) TurnLeft() Coordinate {
 	default:
 		panic(assert.Fail("couldn't turn left, needs to be a cardinal direction", "dir", g))
 	}
+}
+
+func (g Coordinate) Distance(from Coordinate) float64 {
+	return math.Abs(float64(g.X-from.X)) + math.Abs(float64(g.Y-from.Y))
+}
+
+func (g Coordinate) String() string {
+	if g.label != "" {
+		return fmt.Sprintf("%v(x:%d,y:%d)", g.label, g.X, g.Y)
+	}
+	return fmt.Sprintf("(x:%d,y:%d)", g.X, g.Y)
 }
 
 var (
