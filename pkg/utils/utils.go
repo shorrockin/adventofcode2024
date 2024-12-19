@@ -3,11 +3,21 @@ package utils
 import (
 	"adventofcode2024/pkg/assert"
 	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 )
+
+type Mooey interface {
+	Moo() string
+}
+
+func SayMoo(i Mooey) string {
+	return fmt.Sprintf("MOOOOOOOO: %v\n", i.Moo())
+}
 
 func MustReadInput(path string) []string {
 	lines, err := ReadInput(path)
@@ -99,4 +109,10 @@ func Indexes(value string, target string) []int {
 	}
 
 	return indexes
+}
+
+func ClearScreen() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }

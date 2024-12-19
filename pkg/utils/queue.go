@@ -3,11 +3,16 @@ package utils
 import "container/list"
 
 type Queue[T any] struct {
-	list *list.List
+	list     *list.List
+	popFront bool
 }
 
 func NewQueue[T any]() *Queue[T] {
-	return &Queue[T]{list: list.New()}
+	return &Queue[T]{list: list.New(), popFront: true}
+}
+
+func NewHeap[T any]() *Queue[T] {
+	return &Queue[T]{list: list.New(), popFront: false}
 }
 
 func (q *Queue[T]) Enqueue(value T) {
@@ -25,7 +30,14 @@ func (q *Queue[T]) Dequeue() (T, bool) {
 		var zero T
 		return zero, false
 	}
-	element := q.list.Front()
+	var element *list.Element
+
+	if q.popFront {
+		element = q.list.Front()
+	} else {
+		element = q.list.Back()
+	}
+
 	q.list.Remove(element)
 	return element.Value.(T), true
 }
@@ -44,4 +56,8 @@ func (q *Queue[T]) IsEmpty() bool {
 
 func (q *Queue[T]) Len() int {
 	return q.list.Len()
+}
+
+func (q *Queue[T]) Clear() {
+	q.list.Init()
 }
