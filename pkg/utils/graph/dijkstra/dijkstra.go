@@ -10,7 +10,7 @@ import (
 // of distances which indicate the shortest path to each
 // possible node
 func Dijkstra[T comparable](graph *Graph[T], source T) map[T]float64 {
-	distances := make(map[T]float64)
+	distances := make(map[T]float64, len(graph.Nodes))
 
 	// initialize all distances to infinity
 	for parent := range graph.Edges {

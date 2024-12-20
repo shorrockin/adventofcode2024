@@ -5,16 +5,23 @@ import (
 	"time"
 )
 
+type Benchmark struct {
+	start time.Time
+	last  time.Time
+	name  string
+	laps  int
+}
+
 var names = make(map[string]int)
 
-func Profile(name string, fn func()) {
-	ProfileAndReturn(name, func() bool {
+func Run(name string, fn func()) {
+	AndReturn(name, func() bool {
 		fn()
 		return true
 	})
 }
 
-func ProfileAndReturn[T any](name string, fn func() T) T {
+func AndReturn[T any](name string, fn func() T) T {
 	start := time.Now()
 	names[name]++
 	if names[name] != 1 {
@@ -27,4 +34,22 @@ func ProfileAndReturn[T any](name string, fn func() T) T {
 	elapsed := time.Since(start)
 	fmt.Printf("[%s] finished, took %s\n", name, elapsed)
 	return value
+}
+
+func Start(name string) Benchmark {
+	names[name]++
+	if names[name] != 1 {
+		name = fmt.Sprintf("%s-%d", name, names[name])
+	}
+	start := time.Now()
+	return Benchmark{start, start, name, 0}
+}
+
+func (b *Benchmark) Lap(name string) {
+	elapsed := time.Since(b.last)
+	total := time.Since(b.start)
+
+	b.laps++
+	fmt.Printf("[%s][%s][%d] lap took %s (total %s)\n", b.name, name, b.laps, elapsed, total)
+	b.last = time.Now()
 }
