@@ -2,47 +2,13 @@ package astar
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/priorityqueue"
 	"container/heap"
 )
-
-type Node[T comparable] struct {
-	Contents  T
-	Priority  float64
-	Parent    *Node[T]
-	PathDepth int
-}
-
-func NewNode[T comparable](contents T, priority float64, parent *Node[T]) *Node[T] {
-	depth := 0
-	if parent != nil {
-		depth = parent.PathDepth + 1
-	}
-	return &Node[T]{Contents: contents, Priority: priority, Parent: parent, PathDepth: depth}
-}
 
 type Preference struct {
 	allowBacktrack bool
 	includeStart   bool
-}
-
-type PriorityQueue[T comparable] []*Node[T]
-
-func (pq PriorityQueue[T]) Len() int           { return len(pq) }
-func (pq PriorityQueue[T]) Less(i, j int) bool { return pq[i].Priority < pq[j].Priority }
-func (pq PriorityQueue[T]) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
-
-func (pq *PriorityQueue[T]) Push(x any) {
-	item := x.(*Node[T])
-	*pq = append(*pq, item)
-}
-
-func (pq *PriorityQueue[T]) Pop() any {
-	old := *pq
-	n := len(old)
-	item := old[n-1]
-	old[n-1] = nil // don't stop the GC from reclaiming the item eventually
-	*pq = old[0 : n-1]
-	return item
 }
 
 type Configurator func(*Preference)
@@ -55,7 +21,7 @@ var AllowBacktrack Configurator = func(p *Preference) {
 	p.allowBacktrack = true
 }
 
-func AStar[T comparable](start, end T, neighbors func(node *Node[T]) []T, heuristic func(node T, from *Node[T]) float64, configs ...Configurator) []T {
+func AStar[T comparable](start, end T, neighbors func(node *priorityqueue.Node[T]) []T, heuristic func(node T, from *priorityqueue.Node[T]) float64, configs ...Configurator) []T {
 	preferences := &Preference{
 		allowBacktrack: false,
 		includeStart:   true,
@@ -64,13 +30,13 @@ func AStar[T comparable](start, end T, neighbors func(node *Node[T]) []T, heuris
 		configurator(preferences)
 	}
 
-	pq := make(PriorityQueue[T], 0)
+	pq := make(priorityqueue.Heap[T], 0)
 	visited := utils.NewSet[T]()
 	heap.Init(&pq)
-	heap.Push(&pq, NewNode(start, 0, nil))
+	heap.Push(&pq, priorityqueue.NewNode(start, 0, nil))
 
 	for pq.Len() > 0 {
-		current := heap.Pop(&pq).(*Node[T])
+		current := heap.Pop(&pq).(*priorityqueue.Node[T])
 
 		if current.Contents == end {
 			path := make([]T, 0)
@@ -94,7 +60,7 @@ func AStar[T comparable](start, end T, neighbors func(node *Node[T]) []T, heuris
 				visited.Add(neighbor)
 			}
 
-			newNode := NewNode(neighbor, heuristic(neighbor, current), current)
+			newNode := priorityqueue.NewNode(neighbor, heuristic(neighbor, current), current)
 			heap.Push(&pq, newNode)
 		}
 	}

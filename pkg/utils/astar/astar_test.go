@@ -2,37 +2,21 @@ package astar
 
 import (
 	"adventofcode2024/pkg/utils/grid"
-	"container/heap"
+	"adventofcode2024/pkg/utils/priorityqueue"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPriorityQueueFunctions(t *testing.T) {
-	pq := make(PriorityQueue[grid.Coord], 0)
-	heap.Init(&pq)
-
-	heap.Push(&pq, NewNode(grid.At(2, 0), 2, nil))
-	heap.Push(&pq, NewNode(grid.At(3, 0), 3, nil))
-	heap.Push(&pq, NewNode(grid.At(1, 0), 1, nil))
-	heap.Push(&pq, NewNode(grid.At(0, 0), 0, nil))
-
-	assert.Equal(t, 4, pq.Len())
-	assert.Equal(t, grid.At(0, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
-	assert.Equal(t, grid.At(1, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
-	assert.Equal(t, grid.At(2, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
-	assert.Equal(t, grid.At(3, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
-}
-
 func TestCanSolvePath(t *testing.T) {
 	start := grid.At(0, 0)
 	end := grid.At(1, 1)
-	neighbors := func(node *Node[grid.Coord]) []grid.Coord {
+	neighbors := func(node *priorityqueue.Node[grid.Coord]) []grid.Coord {
 		source := node.Contents
 		return []grid.Coord{source.North(), source.South(), source.East(), source.West()}
 	}
 
-	heuristic := func(node grid.Coord, from *Node[grid.Coord]) float64 {
+	heuristic := func(node grid.Coord, from *priorityqueue.Node[grid.Coord]) float64 {
 		return float64(node.Distance(end))
 	}
 
