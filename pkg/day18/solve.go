@@ -50,7 +50,7 @@ func ShortestPath(bytes map[grid.Coord]int, width, height, time int) int {
 		return float64(from.PathDepth) + float64(node.Distance(end))
 	}
 
-	solution := astar.Find(grid.At(0, 0), end, neighbors, heuristic)
+	solution := astar.AStar(grid.At(0, 0), end, neighbors, heuristic)
 	return len(solution) - 1
 }
 
