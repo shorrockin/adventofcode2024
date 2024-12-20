@@ -2,30 +2,30 @@ package utils
 
 import "container/list"
 
-type Queue[T any] struct {
+type Container[T any] struct {
 	list     *list.List
 	popFront bool
 }
 
-func NewQueue[T any]() *Queue[T] {
-	return &Queue[T]{list: list.New(), popFront: true}
+func NewQueue[T any]() *Container[T] {
+	return &Container[T]{list: list.New(), popFront: true}
 }
 
-func NewStack[T any]() *Queue[T] {
-	return &Queue[T]{list: list.New(), popFront: false}
+func NewStack[T any]() *Container[T] {
+	return &Container[T]{list: list.New(), popFront: false}
 }
 
-func (q *Queue[T]) Enqueue(value T) {
+func (q *Container[T]) Enqueue(value T) {
 	q.list.PushBack(value)
 }
 
-func (q *Queue[T]) EnqueueAll(values ...T) {
+func (q *Container[T]) EnqueueAll(values ...T) {
 	for _, value := range values {
 		q.Enqueue(value)
 	}
 }
 
-func (q *Queue[T]) Dequeue() (T, bool) {
+func (q *Container[T]) Dequeue() (T, bool) {
 	if q.list.Len() == 0 {
 		var zero T
 		return zero, false
@@ -42,7 +42,7 @@ func (q *Queue[T]) Dequeue() (T, bool) {
 	return element.Value.(T), true
 }
 
-func (q *Queue[T]) MustDequeue() T {
+func (q *Container[T]) MustDequeue() T {
 	value, ok := q.Dequeue()
 	if !ok {
 		panic("failed to dequeue, expected value to be on queue")
@@ -50,14 +50,14 @@ func (q *Queue[T]) MustDequeue() T {
 	return value
 }
 
-func (q *Queue[T]) IsEmpty() bool {
+func (q *Container[T]) IsEmpty() bool {
 	return q.list.Len() == 0
 }
 
-func (q *Queue[T]) Len() int {
+func (q *Container[T]) Len() int {
 	return q.list.Len()
 }
 
-func (q *Queue[T]) Clear() {
+func (q *Container[T]) Clear() {
 	q.list.Init()
 }

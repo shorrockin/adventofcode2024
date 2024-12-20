@@ -21,7 +21,7 @@ const (
 
 type Warehouse struct {
 	layout    grid.Grid[Item]
-	movements utils.Queue[grid.Coord]
+	movements utils.Container[grid.Coord]
 	robot     grid.Coord
 }
 
