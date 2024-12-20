@@ -1,8 +1,8 @@
 package day12
 
 import (
-	"adventofcode2024/pkg/grid"
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/grid"
 )
 
 type Group struct {

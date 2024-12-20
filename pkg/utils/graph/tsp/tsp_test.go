@@ -1,6 +1,7 @@
-package graph
+package tsp
 
 import (
+	. "adventofcode2024/pkg/utils/graph"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -1,8 +1,9 @@
-package graph
+package tsp
 
 import (
 	"adventofcode2024/pkg/assert"
 	"adventofcode2024/pkg/utils"
+	. "adventofcode2024/pkg/utils/graph"
 	"math"
 )
 
@@ -96,7 +97,7 @@ func (p *TSPPath[T]) Contains(node T) bool {
 func TSP[T comparable](graph *Graph[T], shortest bool) *TSPPath[T] {
 	best := NewPath[T](shortest)
 
-	for node := range graph.edges {
+	for node := range graph.Edges {
 		working := NewPath[T](shortest)
 		working.Push(node, 0)
 		best = recurseTSP(graph, best, working, shortest)
@@ -111,7 +112,7 @@ func recurseTSP[T comparable](
 	working *TSPPath[T],
 	shortest bool) *TSPPath[T] {
 
-	subGraph := graph.edges[working.Last()]
+	subGraph := graph.Edges[working.Last()]
 	for next := range subGraph {
 		// we can not visit a location twice, skip if we've
 		// already been here

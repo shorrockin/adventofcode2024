@@ -1,23 +1,24 @@
-package graph
+package bfs
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/graph"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestBFS(t *testing.T) {
-	graph := NewGraph[string]()
-	graph.AddEdge("A", "B", 1)
-	graph.AddEdge("A", "C", 1)
-	graph.AddEdge("B", "D", 1)
-	graph.AddEdge("C", "B", 1)
-	graph.AddEdge("D", "F", 1)
-	graph.AddEdge("E", "F", 1)
+	g := graph.NewGraph[string]()
+	g.AddEdge("A", "B", 1)
+	g.AddEdge("A", "C", 1)
+	g.AddEdge("B", "D", 1)
+	g.AddEdge("C", "B", 1)
+	g.AddEdge("D", "F", 1)
+	g.AddEdge("E", "F", 1)
 
 	neighbors := func(node string) []string {
-		return utils.Keys(graph.edges[node])
+		return utils.Keys(g.Edges[node])
 	}
 
 	complete := func(node string) bool {

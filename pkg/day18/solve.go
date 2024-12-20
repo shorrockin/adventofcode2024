@@ -2,9 +2,9 @@ package day18
 
 import (
 	"adventofcode2024/pkg/assert"
-	"adventofcode2024/pkg/grid"
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/astar"
+	"adventofcode2024/pkg/utils/grid"
 	"strings"
 )
 
@@ -47,7 +47,7 @@ func ShortestPath(bytes map[grid.Coordinate]int, width, height, time int) int {
 	}
 
 	heuristic := func(node grid.Coordinate, from *astar.Node[grid.Coordinate]) float64 {
-		return float64(from.PathDepth) + node.Distance(end)
+		return float64(from.PathDepth) + float64(node.Distance(end))
 	}
 
 	solution := astar.Find(grid.At(0, 0), end, neighbors, heuristic)

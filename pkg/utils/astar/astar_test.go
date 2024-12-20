@@ -1,7 +1,7 @@
 package astar
 
 import (
-	"adventofcode2024/pkg/grid"
+	"adventofcode2024/pkg/utils/grid"
 	"container/heap"
 	"testing"
 
@@ -33,7 +33,7 @@ func TestCanSolvePath(t *testing.T) {
 	}
 
 	heuristic := func(node grid.Coordinate, from *Node[grid.Coordinate]) float64 {
-		return node.Distance(end)
+		return float64(node.Distance(end))
 	}
 
 	path := Find(start, end, neighbors, heuristic)

@@ -3,25 +3,25 @@ package graph
 import "adventofcode2024/pkg/utils"
 
 type Graph[T comparable] struct {
-	edges map[T]map[T]float64
-	nodes utils.Set[T]
+	Edges map[T]map[T]float64
+	Nodes utils.Set[T]
 }
 
 func NewGraph[T comparable]() *Graph[T] {
 	return &Graph[T]{
-		edges: make(map[T]map[T]float64),
-		nodes: utils.NewSet[T](),
+		Edges: make(map[T]map[T]float64),
+		Nodes: utils.NewSet[T](),
 	}
 }
 
 // add's a directed edge between two nodes in the graph
 func (g *Graph[T]) AddEdge(from T, to T, weight float64) {
-	if g.edges[from] == nil {
-		g.edges[from] = make(map[T]float64)
+	if g.Edges[from] == nil {
+		g.Edges[from] = make(map[T]float64)
 	}
-	g.nodes.Add(from)
-	g.nodes.Add(to)
-	g.edges[from][to] = weight
+	g.Nodes.Add(from)
+	g.Nodes.Add(to)
+	g.Edges[from][to] = weight
 }
 
 // add's a bidirectional edge between two nodes in the graph
@@ -32,7 +32,7 @@ func (g *Graph[T]) AddBidirectionalEdge(from T, to T, weight float64) {
 
 // true if there is a connection between the two edges
 func (g Graph[T]) Exists(from T, to T) bool {
-	value, exists := g.edges[from]
+	value, exists := g.Edges[from]
 	if !exists {
 		return false
 	}
@@ -51,7 +51,7 @@ func (g Graph[T]) Distance(from T, to T) (float64, bool) {
 	if !g.Exists(from, to) {
 		return -1, false
 	}
-	return g.edges[from][to], true
+	return g.Edges[from][to], true
 }
 
 // returns the total number of unique nodes in this graph as
@@ -59,5 +59,5 @@ func (g Graph[T]) Distance(from T, to T) (float64, bool) {
 // entry for A -> B this needs to return 2, even though the
 // map size is 1
 func (g Graph[T]) NodeCount() int {
-	return len(g.nodes)
+	return len(g.Nodes)
 }

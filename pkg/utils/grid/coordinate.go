@@ -94,8 +94,20 @@ func (g Coordinate) TurnLeft() Coordinate {
 	}
 }
 
-func (g Coordinate) Distance(from Coordinate) float64 {
-	return math.Abs(float64(g.X-from.X)) + math.Abs(float64(g.Y-from.Y))
+func (g Coordinate) Distance(from Coordinate) int {
+	return int(math.Abs(float64(g.X-from.X))) + int(math.Abs(float64(g.Y-from.Y)))
+}
+
+func (g Coordinate) CoordsInRange(maxRange int) []Coordinate {
+	points := make([]Coordinate, 0, CoordsWithinRadius(maxRange))
+	for dx := -maxRange; dx <= maxRange; dx++ {
+		remaining := maxRange - int(math.Abs(float64(dx)))
+		for dy := -remaining; dy <= remaining; dy++ {
+			points = append(points, Coordinate{X: g.X + dx, Y: g.Y + dy})
+		}
+	}
+
+	return points
 }
 
 func (g Coordinate) String() string {
@@ -103,6 +115,10 @@ func (g Coordinate) String() string {
 		return fmt.Sprintf("%v(x:%d,y:%d)", g.label, g.X, g.Y)
 	}
 	return fmt.Sprintf("(x:%d,y:%d)", g.X, g.Y)
+}
+
+func CoordsWithinRadius(distance int) int {
+	return 2*distance*distance + 2*distance + 1
 }
 
 var (

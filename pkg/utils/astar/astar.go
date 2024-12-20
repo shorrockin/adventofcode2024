@@ -22,6 +22,7 @@ func NewNode[T comparable](contents T, priority float64, parent *Node[T]) *Node[
 
 type Preference struct {
 	allowBacktrack bool
+	includeStart   bool
 }
 
 type PriorityQueue[T comparable] []*Node[T]
@@ -46,6 +47,10 @@ func (pq *PriorityQueue[T]) Pop() any {
 
 type Configurator func(*Preference)
 
+var ExcludeStart Configurator = func(p *Preference) {
+	p.includeStart = false
+}
+
 var AllowBacktrack Configurator = func(p *Preference) {
 	p.allowBacktrack = true
 }
@@ -53,6 +58,7 @@ var AllowBacktrack Configurator = func(p *Preference) {
 func Find[T comparable](start, end T, neighbors func(node *Node[T]) []T, heuristic func(node T, from *Node[T]) float64, configs ...Configurator) []T {
 	preferences := &Preference{
 		allowBacktrack: false,
+		includeStart:   true,
 	}
 	for _, configurator := range configs {
 		configurator(preferences)
@@ -72,7 +78,12 @@ func Find[T comparable](start, end T, neighbors func(node *Node[T]) []T, heurist
 				path = append([]T{current.Contents}, path...)
 				current = current.Parent
 			}
-			return path
+
+			if !preferences.includeStart && len(path) > 1 {
+				return path[1:]
+			} else {
+				return path
+			}
 		}
 
 		for _, neighbor := range neighbors(current) {

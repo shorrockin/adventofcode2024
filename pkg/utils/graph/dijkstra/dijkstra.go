@@ -1,7 +1,8 @@
-package graph
+package dijkstra
 
 import (
 	"adventofcode2024/pkg/utils"
+	. "adventofcode2024/pkg/utils/graph"
 	"math"
 )
 
@@ -12,12 +13,12 @@ func Dijkstra[T comparable](graph *Graph[T], source T) map[T]float64 {
 	distances := make(map[T]float64)
 
 	// initialize all distances to infinity
-	for parent := range graph.edges {
+	for parent := range graph.Edges {
 		distances[parent] = math.Inf(1)
 
 		// some children are not parent's so add them as well
 		// to ensure we capture everything
-		for child := range graph.edges[parent] {
+		for child := range graph.Edges[parent] {
 			distances[child] = math.Inf(1)
 		}
 	}
@@ -28,7 +29,7 @@ func Dijkstra[T comparable](graph *Graph[T], source T) map[T]float64 {
 
 	for notDone {
 		visited.Add(current)
-		for neighbor, distance := range graph.edges[current] {
+		for neighbor, distance := range graph.Edges[current] {
 			alternative := distances[current] + distance
 			if alternative < distances[neighbor] {
 				distances[neighbor] = alternative

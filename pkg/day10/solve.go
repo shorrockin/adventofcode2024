@@ -1,8 +1,8 @@
 package day10
 
 import (
-	"adventofcode2024/pkg/grid"
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/grid"
 )
 
 func Solve(path string, partOne bool) int {

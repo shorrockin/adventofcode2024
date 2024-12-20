@@ -3,6 +3,7 @@ package grid
 import (
 	"adventofcode2024/pkg/assert"
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/graph"
 	"math"
 	"strings"
 )
@@ -147,4 +148,20 @@ func (g Grid[T]) AssertPopulated(coordinate Coordinate) {
 func (g Grid[T]) AssertEmpty(coordinate Coordinate) {
 	_, ok := g[coordinate]
 	assert.False(ok, "expected value to not be populated at coordinate", "coordinate", coordinate)
+}
+
+func (g Grid[T]) ToGraph(validator func(node Node[T]) bool) *graph.Graph[Coordinate] {
+	grph := graph.NewGraph[Coordinate]()
+	for coordinate, node := range g {
+		if !validator(node) {
+			continue
+		}
+
+		for _, neighbor := range coordinate.Cardinals() {
+			if neighborNode, ok := g.Get(neighbor); ok && validator(neighborNode) {
+				grph.AddBidirectionalEdge(coordinate, neighbor, 1)
+			}
+		}
+	}
+	return grph
 }

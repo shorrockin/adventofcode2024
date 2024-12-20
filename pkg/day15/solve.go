@@ -2,8 +2,8 @@ package day15
 
 import (
 	"adventofcode2024/pkg/assert"
-	"adventofcode2024/pkg/grid"
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/grid"
 	"fmt"
 	"strings"
 )

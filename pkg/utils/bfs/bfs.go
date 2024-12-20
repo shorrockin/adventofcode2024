@@ -1,4 +1,4 @@
-package graph
+package bfs
 
 import (
 	"adventofcode2024/pkg/assert"
