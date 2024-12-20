@@ -11,7 +11,7 @@ func NewQueue[T any]() *Queue[T] {
 	return &Queue[T]{list: list.New(), popFront: true}
 }
 
-func NewHeap[T any]() *Queue[T] {
+func NewStack[T any]() *Queue[T] {
 	return &Queue[T]{list: list.New(), popFront: false}
 }
 
