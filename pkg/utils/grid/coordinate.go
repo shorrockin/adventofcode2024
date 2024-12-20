@@ -1,7 +1,7 @@
 package grid
 
 import (
-	"adventofcode2024/pkg/assert"
+	"adventofcode2024/pkg/utils/assert"
 	"fmt"
 	"math"
 )

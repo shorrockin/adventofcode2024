@@ -1,8 +1,8 @@
 package bfs
 
 import (
-	"adventofcode2024/pkg/assert"
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/assert"
 )
 
 func BFS[T comparable](start T, neighbors func(from T) []T, complete func(at T) bool) ([]T, bool) {

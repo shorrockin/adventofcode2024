@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"adventofcode2024/pkg/assert"
+	"adventofcode2024/pkg/utils/assert"
 
 	"golang.org/x/exp/constraints"
 )

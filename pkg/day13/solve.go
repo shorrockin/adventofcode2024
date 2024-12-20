@@ -1,8 +1,8 @@
 package day13
 
 import (
-	"adventofcode2024/pkg/assert"
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/assert"
 	"math"
 	"regexp"
 	"strings"
