@@ -3,7 +3,6 @@ package astar
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/priorityqueue"
-	"container/heap"
 )
 
 type Preference struct {
@@ -30,13 +29,12 @@ func AStar[T comparable](start, end T, neighbors func(node *priorityqueue.Node[T
 		configurator(preferences)
 	}
 
-	pq := make(priorityqueue.Heap[T], 0)
+	pq := priorityqueue.NewPriorityQueue[T]()
 	visited := utils.NewSet[T]()
-	heap.Init(&pq)
-	heap.Push(&pq, priorityqueue.NewNode(start, 0, nil))
+	pq.Push(start, 0, nil)
 
 	for pq.Len() > 0 {
-		current := heap.Pop(&pq).(*priorityqueue.Node[T])
+		current := pq.PopNode()
 
 		if current.Contents == end {
 			path := make([]T, 0)
@@ -60,8 +58,7 @@ func AStar[T comparable](start, end T, neighbors func(node *priorityqueue.Node[T
 				visited.Add(neighbor)
 			}
 
-			newNode := priorityqueue.NewNode(neighbor, heuristic(neighbor, current), current)
-			heap.Push(&pq, newNode)
+			pq.Push(neighbor, heuristic(neighbor, current), current)
 		}
 	}
 
