@@ -8,16 +8,16 @@ import (
 )
 
 type Path struct {
-	coord  grid.Coordinate
-	facing grid.Coordinate
+	coord  grid.Coord
+	facing grid.Coord
 }
 
 // map of position visited and all the different ways
 // we were facing when we visited it.
-type Visited map[grid.Coordinate][]grid.Coordinate
+type Visited map[grid.Coord][]grid.Coord
 
 func Solve(file string, partOne bool) int {
-	var start grid.Coordinate
+	var start grid.Coord
 
 	maze := grid.Parse(utils.MustReadInput(file), func(value rune, x, y int) bool {
 		if value == '^' {
@@ -34,7 +34,7 @@ func Solve(file string, partOne bool) int {
 		return len(path)
 	}
 
-	loops := utils.NewSet[grid.Coordinate]()
+	loops := utils.NewSet[grid.Coord]()
 
 	// iterate over the path we walked to complete the maze and place walls
 	// ahead the direction we were moving to test to see if this would have
@@ -67,9 +67,9 @@ func Solve(file string, partOne bool) int {
 	return len(loops)
 }
 
-func simulate(maze *grid.Grid[bool], position grid.Coordinate, facing grid.Coordinate) (Visited, bool) {
+func simulate(maze *grid.Grid[bool], position grid.Coord, facing grid.Coord) (Visited, bool) {
 	visited := make(Visited)
-	visited[position] = []grid.Coordinate{facing}
+	visited[position] = []grid.Coord{facing}
 
 	for {
 		if !maze.Contains(position) {

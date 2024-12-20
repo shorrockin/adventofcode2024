@@ -7,12 +7,12 @@ import (
 
 type Group struct {
 	value  rune
-	coords utils.Set[grid.Coordinate]
+	coords utils.Set[grid.Coord]
 }
 
 func Solve(path string, partOne bool) int {
 	plots := parse(path)
-	visited := utils.NewSet[grid.Coordinate]()
+	visited := utils.NewSet[grid.Coord]()
 	groups := []Group{}
 
 	for coord, node := range plots {
@@ -43,8 +43,8 @@ func parse(path string) grid.Grid[rune] {
 	})
 }
 
-func visit(plots *grid.Grid[rune], source grid.Coordinate, visited *utils.Set[grid.Coordinate], group *Group) {
-	neighbors := utils.Filter(source.Cardinals(), func(neighbor grid.Coordinate) bool {
+func visit(plots *grid.Grid[rune], source grid.Coord, visited *utils.Set[grid.Coord], group *Group) {
+	neighbors := utils.Filter(source.Cardinals(), func(neighbor grid.Coord) bool {
 		if visited.Contains(neighbor) {
 			return false
 		}
@@ -66,7 +66,7 @@ func visit(plots *grid.Grid[rune], source grid.Coordinate, visited *utils.Set[gr
 }
 
 func perimeter(group *Group) int {
-	return utils.Reduce(utils.Keys(group.coords), 0, func(acc int, coord grid.Coordinate) int {
+	return utils.Reduce(utils.Keys(group.coords), 0, func(acc int, coord grid.Coord) int {
 		perimeter := 4
 		neighbors := coord.Cardinals()
 		for _, neighbor := range neighbors {

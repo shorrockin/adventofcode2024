@@ -25,8 +25,8 @@ func Solve(path string, savings, cheatRange int) int {
 	return cheats
 }
 
-func parse(path string) (*graph.Graph[grid.Coordinate], grid.Coordinate) {
-	var start grid.Coordinate
+func parse(path string) (*graph.Graph[grid.Coord], grid.Coord) {
+	var start grid.Coord
 
 	maze := grid.Parse(utils.MustReadInput(path), func(value rune, x, y int) bool {
 		if value == 'S' {

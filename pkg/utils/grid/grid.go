@@ -9,11 +9,11 @@ import (
 )
 
 type Node[T any] struct {
-	Coordinate Coordinate
+	Coordinate Coord
 	Contents   T
 }
 
-type Grid[T any] map[Coordinate]Node[T]
+type Grid[T any] map[Coord]Node[T]
 
 func NewGrid[T any]() Grid[T] {
 	return make(Grid[T])
@@ -37,33 +37,33 @@ func (g Grid[T]) MustAt(x int, y int) Node[T] {
 	return g.MustGet(At(x, y))
 }
 
-func (g Grid[T]) Get(coordinate Coordinate) (Node[T], bool) {
+func (g Grid[T]) Get(coordinate Coord) (Node[T], bool) {
 	value, ok := g[coordinate]
 	return value, ok
 }
 
-func (g Grid[T]) GetContents(coordinate Coordinate) (T, bool) {
+func (g Grid[T]) GetContents(coordinate Coord) (T, bool) {
 	value, ok := g[coordinate]
 	return value.Contents, ok
 }
 
-func (g Grid[T]) MustGetContents(coordinate Coordinate) T {
+func (g Grid[T]) MustGetContents(coordinate Coord) T {
 	g.AssertPopulated(coordinate)
 	return g[coordinate].Contents
 }
 
-func (g Grid[T]) Contains(coordinate Coordinate) bool {
+func (g Grid[T]) Contains(coordinate Coord) bool {
 	_, ok := g[coordinate]
 	return ok
 }
 
-func (g Grid[T]) MustGet(coordinate Coordinate) Node[T] {
+func (g Grid[T]) MustGet(coordinate Coord) Node[T] {
 	g.AssertPopulated(coordinate)
 	return g[coordinate]
 }
 
-func (g Grid[T]) GetAll(coordinates []Coordinate) []Node[T] {
-	values := utils.MapConditional(coordinates, func(coordinate Coordinate) (Node[T], bool) {
+func (g Grid[T]) GetAll(coordinates []Coord) []Node[T] {
+	values := utils.MapConditional(coordinates, func(coordinate Coord) (Node[T], bool) {
 		value, ok := g[coordinate]
 		return value, ok
 	})
@@ -75,7 +75,7 @@ func (g Grid[T]) InsertAt(x, y int, value T) {
 	g.Insert(At(x, y), value)
 }
 
-func (g Grid[T]) Insert(coordinate Coordinate, value T) {
+func (g Grid[T]) Insert(coordinate Coord, value T) {
 	g.AssertEmpty(coordinate)
 	g[coordinate] = Node[T]{
 		Coordinate: coordinate,
@@ -87,7 +87,7 @@ func (g Grid[T]) ReplaceAt(x, y int, value T) {
 	g.Replace(At(x, y), value)
 }
 
-func (g Grid[T]) Replace(coordinate Coordinate, value T) {
+func (g Grid[T]) Replace(coordinate Coord, value T) {
 	g[coordinate] = Node[T]{
 		Coordinate: coordinate,
 		Contents:   value,
@@ -135,23 +135,23 @@ func (g Grid[T]) Height() (int, int) {
 	return min, max
 }
 
-func (g Grid[T]) UpdateAt(coordinate Coordinate, value T) {
+func (g Grid[T]) UpdateAt(coordinate Coord, value T) {
 	g.AssertPopulated(coordinate)
 	g[coordinate] = Node[T]{coordinate, value}
 }
 
-func (g Grid[T]) AssertPopulated(coordinate Coordinate) {
+func (g Grid[T]) AssertPopulated(coordinate Coord) {
 	_, ok := g[coordinate]
 	assert.True(ok, "expected value to be populated at coordinate", coordinate)
 }
 
-func (g Grid[T]) AssertEmpty(coordinate Coordinate) {
+func (g Grid[T]) AssertEmpty(coordinate Coord) {
 	_, ok := g[coordinate]
 	assert.False(ok, "expected value to not be populated at coordinate", "coordinate", coordinate)
 }
 
-func (g Grid[T]) ToGraph(validator func(node Node[T]) bool) *graph.Graph[Coordinate] {
-	grph := graph.NewGraph[Coordinate]()
+func (g Grid[T]) ToGraph(validator func(node Node[T]) bool) *graph.Graph[Coord] {
+	grph := graph.NewGraph[Coord]()
 	for coordinate, node := range g {
 		if !validator(node) {
 			continue

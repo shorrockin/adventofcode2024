@@ -8,8 +8,8 @@ import (
 )
 
 type Robot struct {
-	position grid.Coordinate
-	velocity grid.Coordinate
+	position grid.Coord
+	velocity grid.Coord
 }
 
 func (r *Robot) Move(width, height int) {
@@ -31,7 +31,7 @@ func treeLocation(robots []*Robot, width, height int) int {
 
 	for {
 		seconds++
-		lookup := make(map[grid.Coordinate]*Robot)
+		lookup := make(map[grid.Coord]*Robot)
 		for _, robot := range robots {
 			robot.Move(width, height)
 			lookup[robot.position] = robot
@@ -80,7 +80,7 @@ func countQuadrants(robots []*Robot, width, height int) int {
 }
 
 func display(robots []*Robot, width, height int) {
-	lookup := make(map[grid.Coordinate]*Robot)
+	lookup := make(map[grid.Coord]*Robot)
 	for _, robot := range robots {
 		lookup[robot.position] = robot
 	}

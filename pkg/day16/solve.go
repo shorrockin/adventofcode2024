@@ -6,13 +6,13 @@ import (
 )
 
 type Movement struct {
-	position grid.Coordinate
-	facing   grid.Coordinate
+	position grid.Coord
+	facing   grid.Coord
 }
 
 type Score struct {
 	value int
-	path  utils.Set[grid.Coordinate]
+	path  utils.Set[grid.Coord]
 }
 
 func Solve(path string, partOne bool) int {
@@ -76,13 +76,13 @@ func Solve(path string, partOne bool) int {
 	return len(score.path)
 }
 
-func (s Score) step(value int, coord grid.Coordinate) Score {
+func (s Score) step(value int, coord grid.Coord) Score {
 	path := s.path.Copy()
 	path.Add(coord)
 	return Score{value, path}
 }
 
-func findScoreAt(scores map[Movement]Score, position grid.Coordinate) Score {
+func findScoreAt(scores map[Movement]Score, position grid.Coord) Score {
 	best := Score{}
 	for _, movement := range []Movement{
 		{position, grid.East},

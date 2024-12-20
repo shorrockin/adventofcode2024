@@ -9,7 +9,7 @@ import (
 )
 
 func TestPriorityQueueFunctions(t *testing.T) {
-	pq := make(PriorityQueue[grid.Coordinate], 0)
+	pq := make(PriorityQueue[grid.Coord], 0)
 	heap.Init(&pq)
 
 	heap.Push(&pq, NewNode(grid.At(2, 0), 2, nil))
@@ -18,21 +18,21 @@ func TestPriorityQueueFunctions(t *testing.T) {
 	heap.Push(&pq, NewNode(grid.At(0, 0), 0, nil))
 
 	assert.Equal(t, 4, pq.Len())
-	assert.Equal(t, grid.At(0, 0), heap.Pop(&pq).(*Node[grid.Coordinate]).Contents)
-	assert.Equal(t, grid.At(1, 0), heap.Pop(&pq).(*Node[grid.Coordinate]).Contents)
-	assert.Equal(t, grid.At(2, 0), heap.Pop(&pq).(*Node[grid.Coordinate]).Contents)
-	assert.Equal(t, grid.At(3, 0), heap.Pop(&pq).(*Node[grid.Coordinate]).Contents)
+	assert.Equal(t, grid.At(0, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
+	assert.Equal(t, grid.At(1, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
+	assert.Equal(t, grid.At(2, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
+	assert.Equal(t, grid.At(3, 0), heap.Pop(&pq).(*Node[grid.Coord]).Contents)
 }
 
 func TestCanSolvePath(t *testing.T) {
 	start := grid.At(0, 0)
 	end := grid.At(1, 1)
-	neighbors := func(node *Node[grid.Coordinate]) []grid.Coordinate {
+	neighbors := func(node *Node[grid.Coord]) []grid.Coord {
 		source := node.Contents
-		return []grid.Coordinate{source.North(), source.South(), source.East(), source.West()}
+		return []grid.Coord{source.North(), source.South(), source.East(), source.West()}
 	}
 
-	heuristic := func(node grid.Coordinate, from *Node[grid.Coordinate]) float64 {
+	heuristic := func(node grid.Coord, from *Node[grid.Coord]) float64 {
 		return float64(node.Distance(end))
 	}
 

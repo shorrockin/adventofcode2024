@@ -21,8 +21,8 @@ const (
 
 type Warehouse struct {
 	layout    grid.Grid[Item]
-	movements utils.Queue[grid.Coordinate]
-	robot     grid.Coordinate
+	movements utils.Queue[grid.Coord]
+	robot     grid.Coord
 }
 
 func Solve(path string, partOne bool) int {
@@ -36,11 +36,11 @@ func Solve(path string, partOne bool) int {
 	return score(warehouse)
 }
 
-func move(warehouse *Warehouse, from grid.Coordinate, direction grid.Coordinate) grid.Coordinate {
+func move(warehouse *Warehouse, from grid.Coord, direction grid.Coord) grid.Coord {
 	dest := from.Offset(direction)
 	current := warehouse.layout.MustGetContents(from)
 
-	execute := func(from grid.Coordinate, dest grid.Coordinate) grid.Coordinate {
+	execute := func(from grid.Coord, dest grid.Coord) grid.Coord {
 		warehouse.layout.UpdateAt(dest, current)
 		warehouse.layout.UpdateAt(from, Open)
 		return dest
@@ -76,7 +76,7 @@ func move(warehouse *Warehouse, from grid.Coordinate, direction grid.Coordinate)
 	return from
 }
 
-func canMoveAll(warehouse *Warehouse, direction grid.Coordinate, dests ...grid.Coordinate) bool {
+func canMoveAll(warehouse *Warehouse, direction grid.Coord, dests ...grid.Coord) bool {
 	for _, dest := range dests {
 		target := dest.Offset(direction)
 		item := warehouse.layout.MustGetContents(target)
@@ -92,7 +92,7 @@ func canMoveAll(warehouse *Warehouse, direction grid.Coordinate, dests ...grid.C
 	return true
 }
 
-func pairedBox(item Item) grid.Coordinate {
+func pairedBox(item Item) grid.Coord {
 	switch item {
 	case BoxLeft:
 		return grid.East
@@ -138,7 +138,7 @@ func parse(path string, partOne bool) *Warehouse {
 	input := strings.Join(utils.MustReadInput(path), "\n")
 	parts := strings.Split(input, "\n\n")
 	robot := grid.At(-1, -1)
-	movements := utils.NewQueue[grid.Coordinate]()
+	movements := utils.NewQueue[grid.Coord]()
 	assert.Equal(2, len(parts), "should have two main parts in the input")
 
 	lines := strings.Split(parts[0], "\n")

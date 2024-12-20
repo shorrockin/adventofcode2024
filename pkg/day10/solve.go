@@ -6,7 +6,7 @@ import (
 )
 
 func Solve(path string, partOne bool) int {
-	trailheads := make([]grid.Coordinate, 0)
+	trailheads := make([]grid.Coord, 0)
 	guide := grid.Parse(utils.MustReadInput(path), func(value rune, x, y int) int {
 		if value == '0' {
 			trailheads = append(trailheads, grid.At(x, y))
@@ -17,12 +17,12 @@ func Solve(path string, partOne bool) int {
 	return bfs(guide, trailheads, partOne)
 }
 
-func bfs(guide grid.Grid[int], trailheads []grid.Coordinate, partOne bool) int {
+func bfs(guide grid.Grid[int], trailheads []grid.Coord, partOne bool) int {
 	found := 0
 
 	for _, trailhead := range trailheads {
-		queue := utils.NewQueue[[]grid.Coordinate]()
-		queue.Enqueue([]grid.Coordinate{trailhead})
+		queue := utils.NewQueue[[]grid.Coord]()
+		queue.Enqueue([]grid.Coord{trailhead})
 		visited := utils.NewSet[string]()
 
 		for !queue.IsEmpty() {
@@ -35,7 +35,7 @@ func bfs(guide grid.Grid[int], trailheads []grid.Coordinate, partOne bool) int {
 			}
 
 			for _, neighbor := range neighbors(&guide, tail) {
-				var path []grid.Coordinate = make([]grid.Coordinate, len(current)+1)
+				var path []grid.Coord = make([]grid.Coord, len(current)+1)
 				copy(path, current)
 				path[len(current)] = neighbor
 				hash := generateHash(&path, partOne)
@@ -51,9 +51,9 @@ func bfs(guide grid.Grid[int], trailheads []grid.Coordinate, partOne bool) int {
 	return found
 }
 
-func neighbors(guide *grid.Grid[int], from grid.Coordinate) []grid.Coordinate {
+func neighbors(guide *grid.Grid[int], from grid.Coord) []grid.Coord {
 	base := guide.MustGetContents(from)
-	return utils.Filter(from.Cardinals(), func(neighbor grid.Coordinate) bool {
+	return utils.Filter(from.Cardinals(), func(neighbor grid.Coord) bool {
 		if value, exists := guide.GetContents(neighbor); exists {
 			return (value - base) == 1
 		}
@@ -61,7 +61,7 @@ func neighbors(guide *grid.Grid[int], from grid.Coordinate) []grid.Coordinate {
 	})
 }
 
-func generateHash(path *[]grid.Coordinate, partOne bool) string {
+func generateHash(path *[]grid.Coord, partOne bool) string {
 	if partOne {
 		return (*path)[len(*path)-1].String()
 	}

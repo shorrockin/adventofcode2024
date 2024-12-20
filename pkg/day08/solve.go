@@ -10,8 +10,8 @@ func Solve(path string, partOne bool) int {
 	lines := utils.MustReadInput(path)
 	height := len(lines)
 	width := len(lines[0])
-	attenas := make(map[rune][]grid.Coordinate)
-	antinodes := utils.NewSet[grid.Coordinate]()
+	attenas := make(map[rune][]grid.Coord)
+	antinodes := utils.NewSet[grid.Coord]()
 
 	for y, line := range lines {
 		for x, char := range line {
@@ -57,7 +57,7 @@ func Solve(path string, partOne bool) int {
 	return len(antinodes)
 }
 
-func inBounds(position grid.Coordinate, width, height int) bool {
+func inBounds(position grid.Coord, width, height int) bool {
 	return position.X >= 0 &&
 		position.Y >= 0 &&
 		position.X < width &&
