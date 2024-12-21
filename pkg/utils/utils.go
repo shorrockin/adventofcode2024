@@ -3,21 +3,12 @@ package utils
 import (
 	"adventofcode2024/pkg/utils/assert"
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"strconv"
 	"strings"
 )
-
-type Mooey interface {
-	Moo() string
-}
-
-func SayMoo(i Mooey) string {
-	return fmt.Sprintf("MOOOOOOOO: %v\n", i.Moo())
-}
 
 func MustReadInput(path string) []string {
 	lines, err := ReadInput(path)
