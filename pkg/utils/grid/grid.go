@@ -29,6 +29,10 @@ func Parse[T any](lines []string, init func(value rune, x int, y int) T) Grid[T]
 	return grid
 }
 
+func ParseRune(char rune, x, y int) rune {
+	return char
+}
+
 func (g Grid[T]) At(x int, y int) (Node[T], bool) {
 	return g.Get(At(x, y))
 }

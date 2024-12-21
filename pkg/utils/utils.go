@@ -111,6 +111,13 @@ func Indexes(value string, target string) []int {
 	return indexes
 }
 
+func AbsInt(value int) int {
+	if value < 0 {
+		return -value
+	}
+	return value
+}
+
 func ClearScreen() {
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
