@@ -45,11 +45,11 @@ func Start(name string) Benchmark {
 	return Benchmark{start, start, name, 0}
 }
 
-func (b *Benchmark) Lap(name string) {
+func (b *Benchmark) Measure(name string) {
 	elapsed := time.Since(b.last)
 	total := time.Since(b.start)
 
 	b.laps++
-	fmt.Printf("[%s][%s][%d] lap took %s (total %s)\n", b.name, name, b.laps, elapsed, total)
+	fmt.Printf("[%s][%s][%d] took %s (total: %s)\n", b.name, name, b.laps, elapsed, total)
 	b.last = time.Now()
 }

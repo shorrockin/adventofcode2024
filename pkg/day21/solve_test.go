@@ -1,6 +1,7 @@
 package day21
 
 import (
+	"adventofcode2024/pkg/utils/benchmark"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,5 +16,7 @@ func TestPartOneActual(t *testing.T) {
 }
 
 func TestPartTwoActual(t *testing.T) {
+	bm := benchmark.Start("PartTwo")
 	assert.Equal(t, 188000493837892, Solve("input.txt", 26))
+	bm.Measure("Done")
 }
