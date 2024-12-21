@@ -7,18 +7,13 @@ import (
 )
 
 func TestPartOneExample(t *testing.T) {
-	// assert.Equal(t, 126384, Solve("input.example.txt", 3))
+	assert.Equal(t, 126384, Solve("input.example.txt", 3))
 }
 
 func TestPartOneActual(t *testing.T) {
-	// assert.Equal(t, "X", BestPath(&numerics, 'A', '0', 2))
-	assert.Equal(t, -154208, Solve("input.txt", 22))
+	assert.Equal(t, 154208, Solve("input.txt", 3))
 }
 
-// func TestPartTwoExample(t *testing.T) {
-// 	assert.Equal(t, -1, Solve("input.example.txt", false))
-// }
-
 func TestPartTwoActual(t *testing.T) {
-	// assert.Equal(t, -1, Solve("input.txt", 25))
+	assert.Equal(t, 188000493837892, Solve("input.txt", 26))
 }

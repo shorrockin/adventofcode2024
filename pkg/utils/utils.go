@@ -111,7 +111,7 @@ func Indexes(value string, target string) []int {
 	return indexes
 }
 
-func AbsInt(value int) int {
+func AbsInt[T int | int64](value T) T {
 	if value < 0 {
 		return -value
 	}
