@@ -17,51 +17,32 @@ func PartOne(path string) int {
 }
 
 func PartTwo(path string) int {
-	secrets := make(map[int][]int)
+	var deltas [4]int
+	totals := make(map[[4]int]int)
 
 	for _, initial := range parse(path) {
-		secrets[initial] = make([]int, ITERATIONS)
 		previous := initial
+		purchases := make(map[[4]int]int)
 
 		for idx := range ITERATIONS {
 			next := nextSecret(previous)
-			secrets[initial][idx] = next % 10
+			delta := (next % 10) - (previous % 10)
 			previous = next
-		}
-	}
 
-	total := make(map[[4]int]int)
-	for initial, digits := range secrets {
-		purchases := make(map[[4]int]int)
+			deltas[0], deltas[1], deltas[2] = deltas[1], deltas[2], deltas[3]
+			deltas[3] = delta
 
-		for idx := 0; idx+4 < len(digits); idx++ {
-			key := [4]int{}
-
-			previous := initial
-			if idx > 0 {
-				previous = digits[idx-1]
-			}
-
-			for offset := range 4 {
-				value := digits[idx+offset] - previous
-				key[offset] = value
-				previous = digits[idx+offset]
-
-			}
-
-			// they'll purchase the first time they see this sequence,
-			// so only update the map if it's not there
-			if _, exists := purchases[key]; !exists {
-				purchases[key] = previous
+			if _, exists := purchases[deltas]; !exists && idx > 4 {
+				purchases[deltas] = next % 10
 			}
 		}
 
 		for key, value := range purchases {
-			total[key] += value
+			totals[key] += value
 		}
 	}
 
-	return utils.MaxMapValue(total)
+	return utils.MaxMapValue(totals)
 }
 
 func nextSecret(number int) int {
