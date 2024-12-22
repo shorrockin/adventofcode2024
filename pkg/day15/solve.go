@@ -3,6 +3,7 @@ package day15
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
 	"fmt"
 	"strings"
@@ -21,7 +22,7 @@ const (
 
 type Warehouse struct {
 	layout    grid.Grid[Item]
-	movements utils.Container[grid.Coord]
+	movements collections.Dequeue[grid.Coord]
 	robot     grid.Coord
 }
 
@@ -138,7 +139,7 @@ func parse(path string, partOne bool) *Warehouse {
 	input := strings.Join(utils.MustReadInput(path), "\n")
 	parts := strings.Split(input, "\n\n")
 	robot := grid.At(-1, -1)
-	movements := utils.NewQueue[grid.Coord]()
+	movements := collections.NewQueue[grid.Coord]()
 	assert.Equal(2, len(parts), "should have two main parts in the input")
 
 	lines := strings.Split(parts[0], "\n")

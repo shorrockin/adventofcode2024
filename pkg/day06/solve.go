@@ -3,6 +3,7 @@ package day06
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
 	"slices"
 )
@@ -34,7 +35,7 @@ func Solve(file string, partOne bool) int {
 		return len(path)
 	}
 
-	loops := utils.NewSet[grid.Coord]()
+	loops := collections.NewSet[grid.Coord]()
 
 	// iterate over the path we walked to complete the maze and place walls
 	// ahead the direction we were moving to test to see if this would have

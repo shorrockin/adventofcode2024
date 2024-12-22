@@ -3,6 +3,7 @@ package day08
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
 )
 
@@ -11,7 +12,7 @@ func Solve(path string, partOne bool) int {
 	height := len(lines)
 	width := len(lines[0])
 	attenas := make(map[rune][]grid.Coord)
-	antinodes := utils.NewSet[grid.Coord]()
+	antinodes := collections.NewSet[grid.Coord]()
 
 	for y, line := range lines {
 		for x, char := range line {

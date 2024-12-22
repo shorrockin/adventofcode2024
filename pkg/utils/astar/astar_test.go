@@ -1,8 +1,8 @@
 package astar
 
 import (
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
-	"adventofcode2024/pkg/utils/priorityqueue"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,12 +11,12 @@ import (
 func TestCanSolvePath(t *testing.T) {
 	start := grid.At(0, 0)
 	end := grid.At(1, 1)
-	neighbors := func(node *priorityqueue.Node[grid.Coord]) []grid.Coord {
+	neighbors := func(node *collections.Node[grid.Coord]) []grid.Coord {
 		source := node.Contents
 		return []grid.Coord{source.North(), source.South(), source.East(), source.West()}
 	}
 
-	heuristic := func(node grid.Coord, from *priorityqueue.Node[grid.Coord]) float64 {
+	heuristic := func(node grid.Coord, from *collections.Node[grid.Coord]) float64 {
 		return float64(node.Distance(end))
 	}
 

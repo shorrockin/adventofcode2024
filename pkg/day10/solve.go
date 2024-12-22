@@ -2,6 +2,7 @@ package day10
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
 )
 
@@ -21,9 +22,9 @@ func bfs(guide grid.Grid[int], trailheads []grid.Coord, partOne bool) int {
 	found := 0
 
 	for _, trailhead := range trailheads {
-		queue := utils.NewQueue[[]grid.Coord]()
+		queue := collections.NewQueue[[]grid.Coord]()
 		queue.Push([]grid.Coord{trailhead})
-		visited := utils.NewSet[string]()
+		visited := collections.NewSet[string]()
 
 		for !queue.IsEmpty() {
 			current := queue.MustPop()

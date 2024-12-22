@@ -4,8 +4,8 @@ import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
 	"adventofcode2024/pkg/utils/astar"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
-	"adventofcode2024/pkg/utils/priorityqueue"
 	"strings"
 )
 
@@ -33,7 +33,7 @@ func PartTwo(path string, width, height, startTime int) grid.Coord {
 func ShortestPath(bytes map[grid.Coord]int, width, height, time int) int {
 	end := grid.At(width, height)
 
-	neighbors := func(from *priorityqueue.Node[grid.Coord]) []grid.Coord {
+	neighbors := func(from *collections.Node[grid.Coord]) []grid.Coord {
 		return utils.Filter(from.Contents.Cardinals(), func(pos grid.Coord) bool {
 			if byteTime, ok := bytes[pos]; ok && byteTime < time {
 				return false
@@ -47,7 +47,7 @@ func ShortestPath(bytes map[grid.Coord]int, width, height, time int) int {
 		})
 	}
 
-	heuristic := func(node grid.Coord, from *priorityqueue.Node[grid.Coord]) float64 {
+	heuristic := func(node grid.Coord, from *collections.Node[grid.Coord]) float64 {
 		return float64(from.PathDepth) + float64(node.Distance(end))
 	}
 

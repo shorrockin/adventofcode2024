@@ -1,8 +1,7 @@
 package astar
 
 import (
-	"adventofcode2024/pkg/utils"
-	"adventofcode2024/pkg/utils/priorityqueue"
+	"adventofcode2024/pkg/utils/collections"
 )
 
 type Preference struct {
@@ -20,7 +19,7 @@ var AllowBacktrack Configurator = func(p *Preference) {
 	p.allowBacktrack = true
 }
 
-func AStar[T comparable](start, end T, neighbors func(node *priorityqueue.Node[T]) []T, heuristic func(node T, from *priorityqueue.Node[T]) float64, configs ...Configurator) []T {
+func AStar[T comparable](start, end T, neighbors func(node *collections.Node[T]) []T, heuristic func(node T, from *collections.Node[T]) float64, configs ...Configurator) []T {
 	preferences := &Preference{
 		allowBacktrack: false,
 		includeStart:   true,
@@ -29,8 +28,8 @@ func AStar[T comparable](start, end T, neighbors func(node *priorityqueue.Node[T
 		configurator(preferences)
 	}
 
-	pq := priorityqueue.NewPriorityQueue[T]()
-	visited := utils.NewSet[T]()
+	pq := collections.NewPriorityQueue[T]()
+	visited := collections.NewSet[T]()
 	pq.Push(start, 0, nil)
 
 	for pq.Len() > 0 {

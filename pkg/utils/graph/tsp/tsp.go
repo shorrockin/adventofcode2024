@@ -3,6 +3,7 @@ package tsp
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/collections"
 	. "adventofcode2024/pkg/utils/graph"
 	"math"
 )
@@ -11,7 +12,7 @@ type TSPPath[T comparable] struct {
 	nodes     []T
 	distances map[T]float64
 	distance  float64
-	visited   utils.Set[T]
+	visited   collections.Set[T]
 }
 
 func NewPath[T comparable](shortest bool) *TSPPath[T] {
@@ -27,7 +28,7 @@ func NewPath[T comparable](shortest bool) *TSPPath[T] {
 		nodes:     make([]T, 0),
 		distances: make(map[T]float64),
 		distance:  distance,
-		visited:   utils.NewSet[T](),
+		visited:   collections.NewSet[T](),
 	}
 }
 

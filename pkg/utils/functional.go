@@ -2,7 +2,6 @@ package utils
 
 import (
 	"adventofcode2024/pkg/utils/assert"
-
 	"golang.org/x/exp/constraints"
 )
 
@@ -26,13 +25,13 @@ func MapConditional[T any, K any](data []T, mapper func(T) (K, bool)) []K {
 }
 
 func Uniq[T comparable](input []T) []T {
-	seen := NewSet[T]()
+	seen := make(map[T]bool)
 	var result []T
 
 	for _, value := range input {
-		if !seen.Contains(value) {
+		if _, exists := seen[value]; !exists {
 			result = append(result, value)
-			seen.Add(value)
+			seen[value] = true
 		}
 	}
 

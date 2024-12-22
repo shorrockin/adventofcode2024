@@ -2,17 +2,18 @@ package day12
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
 )
 
 type Group struct {
 	value  rune
-	coords utils.Set[grid.Coord]
+	coords collections.Set[grid.Coord]
 }
 
 func Solve(path string, partOne bool) int {
 	plots := parse(path)
-	visited := utils.NewSet[grid.Coord]()
+	visited := collections.NewSet[grid.Coord]()
 	groups := []Group{}
 
 	for coord, node := range plots {
@@ -21,7 +22,7 @@ func Solve(path string, partOne bool) int {
 		}
 
 		visited.Add(coord)
-		group := Group{node.Contents, utils.NewSetFrom(coord)}
+		group := Group{node.Contents, collections.NewSetFrom(coord)}
 		visit(&plots, coord, &visited, &group)
 		groups = append(groups, group)
 	}
@@ -43,7 +44,7 @@ func parse(path string) grid.Grid[rune] {
 	})
 }
 
-func visit(plots *grid.Grid[rune], source grid.Coord, visited *utils.Set[grid.Coord], group *Group) {
+func visit(plots *grid.Grid[rune], source grid.Coord, visited *collections.Set[grid.Coord], group *Group) {
 	neighbors := utils.Filter(source.Cardinals(), func(neighbor grid.Coord) bool {
 		if visited.Contains(neighbor) {
 			return false

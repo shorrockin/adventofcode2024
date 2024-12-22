@@ -1,16 +1,18 @@
 package graph
 
-import "adventofcode2024/pkg/utils"
+import (
+	"adventofcode2024/pkg/utils/collections"
+)
 
 type Graph[T comparable] struct {
 	Edges map[T]map[T]float64
-	Nodes utils.Set[T]
+	Nodes collections.Set[T]
 }
 
 func NewGraph[T comparable]() *Graph[T] {
 	return &Graph[T]{
 		Edges: make(map[T]map[T]float64),
-		Nodes: utils.NewSet[T](),
+		Nodes: collections.NewSet[T](),
 	}
 }
 

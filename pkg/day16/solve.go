@@ -2,6 +2,7 @@ package day16
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
 )
 
@@ -12,7 +13,7 @@ type Movement struct {
 
 type Score struct {
 	value int
-	path  utils.Set[grid.Coord]
+	path  collections.Set[grid.Coord]
 }
 
 func Solve(path string, partOne bool) int {
@@ -30,11 +31,11 @@ func Solve(path string, partOne bool) int {
 		return true
 	})
 
-	queue := utils.NewQueue[Movement]()
+	queue := collections.NewQueue[Movement]()
 	queue.Push(Movement{start, grid.East})
 
 	scores := make(map[Movement]Score)
-	scores[Movement{start, grid.East}] = Score{0, utils.NewSetFrom(start)}
+	scores[Movement{start, grid.East}] = Score{0, collections.NewSetFrom(start)}
 
 	for !queue.IsEmpty() {
 		origin := queue.MustPop()

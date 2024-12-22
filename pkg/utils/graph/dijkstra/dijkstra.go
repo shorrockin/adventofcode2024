@@ -1,7 +1,7 @@
 package dijkstra
 
 import (
-	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/collections"
 	. "adventofcode2024/pkg/utils/graph"
 	"math"
 )
@@ -24,7 +24,7 @@ func Dijkstra[T comparable](graph *Graph[T], source T) map[T]float64 {
 	}
 	distances[source] = 0
 
-	visited := utils.NewSet[T]()
+	visited := collections.NewSet[T]()
 	current, notDone := nextNode(distances, visited)
 
 	for notDone {
@@ -42,7 +42,7 @@ func Dijkstra[T comparable](graph *Graph[T], source T) map[T]float64 {
 	return distances
 }
 
-func nextNode[T comparable](distances map[T]float64, visited utils.Set[T]) (T, bool) {
+func nextNode[T comparable](distances map[T]float64, visited collections.Set[T]) (T, bool) {
 	var currentNext T
 	currentDistance := math.Inf(1)
 

@@ -1,4 +1,4 @@
-package utils
+package collections
 
 type Set[T comparable] map[T]bool
 
@@ -15,7 +15,11 @@ func NewSetFrom[T comparable](values ...T) Set[T] {
 }
 
 func (s Set[T]) Copy() Set[T] {
-	return CopyMap(s)
+	copy := make(Set[T], len(s))
+	for key, value := range s {
+		copy[key] = value
+	}
+	return copy
 }
 
 func (s Set[T]) Add(value T) {
@@ -41,5 +45,9 @@ func (s Set[T]) Size() int {
 }
 
 func (s Set[T]) Values() []T {
-	return Keys(s)
+	keys := make([]T, 0, len(s))
+	for key := range s {
+		keys = append(keys, key)
+	}
+	return keys
 }
