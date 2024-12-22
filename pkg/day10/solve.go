@@ -22,11 +22,11 @@ func bfs(guide grid.Grid[int], trailheads []grid.Coord, partOne bool) int {
 
 	for _, trailhead := range trailheads {
 		queue := utils.NewQueue[[]grid.Coord]()
-		queue.Enqueue([]grid.Coord{trailhead})
+		queue.Push([]grid.Coord{trailhead})
 		visited := utils.NewSet[string]()
 
 		for !queue.IsEmpty() {
-			current := queue.MustDequeue()
+			current := queue.MustPop()
 			tail := current[len(current)-1]
 
 			if guide.MustGetContents(tail) == 9 {
@@ -42,7 +42,7 @@ func bfs(guide grid.Grid[int], trailheads []grid.Coord, partOne bool) int {
 
 				if !visited.Contains(hash) {
 					visited.Add(hash)
-					queue.Enqueue(path)
+					queue.Push(path)
 				}
 			}
 		}

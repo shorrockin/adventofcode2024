@@ -8,26 +8,26 @@ import (
 
 func TestQueue(t *testing.T) {
 	q := NewQueue[int]()
-	q.Enqueue(1)
-	q.Enqueue(2)
-	q.Enqueue(3)
+	q.Push(1)
+	q.Push(2)
+	q.Push(3)
 	assert.False(t, q.IsEmpty())
 
-	value, ok := q.Dequeue()
+	value, ok := q.Pop()
 	assert.Equal(t, 1, value)
 	assert.True(t, ok)
 	assert.False(t, q.IsEmpty())
 
-	value, ok = q.Dequeue()
+	value, ok = q.Pop()
 	assert.Equal(t, 2, value)
 	assert.True(t, ok)
 	assert.False(t, q.IsEmpty())
 
-	value, ok = q.Dequeue()
+	value, ok = q.Pop()
 	assert.Equal(t, 3, value)
 	assert.True(t, ok)
 	assert.True(t, q.IsEmpty())
 
-	_, ok = q.Dequeue()
+	_, ok = q.Pop()
 	assert.False(t, ok)
 }

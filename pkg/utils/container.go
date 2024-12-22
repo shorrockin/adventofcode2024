@@ -15,17 +15,17 @@ func NewStack[T any]() *Container[T] {
 	return &Container[T]{list: list.New(), popFront: false}
 }
 
-func (q *Container[T]) Enqueue(value T) {
+func (q *Container[T]) Push(value T) {
 	q.list.PushBack(value)
 }
 
-func (q *Container[T]) EnqueueAll(values ...T) {
+func (q *Container[T]) PushAll(values ...T) {
 	for _, value := range values {
-		q.Enqueue(value)
+		q.Push(value)
 	}
 }
 
-func (q *Container[T]) Dequeue() (T, bool) {
+func (q *Container[T]) Pop() (T, bool) {
 	if q.list.Len() == 0 {
 		var zero T
 		return zero, false
@@ -42,8 +42,8 @@ func (q *Container[T]) Dequeue() (T, bool) {
 	return element.Value.(T), true
 }
 
-func (q *Container[T]) MustDequeue() T {
-	value, ok := q.Dequeue()
+func (q *Container[T]) MustPop() T {
+	value, ok := q.Pop()
 	if !ok {
 		panic("failed to dequeue, expected value to be on queue")
 	}

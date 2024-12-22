@@ -7,13 +7,13 @@ import (
 
 func BFS[T comparable](start T, neighbors func(from T) []T, complete func(at T) bool) ([]T, bool) {
 	queue := utils.NewQueue[[]T]()
-	queue.Enqueue([]T{start})
+	queue.Push([]T{start})
 
 	visited := utils.NewSet[T]()
 	visited.Add(start)
 
 	for !queue.IsEmpty() {
-		currentPath, ok := queue.Dequeue()
+		currentPath, ok := queue.Pop()
 		if !ok {
 			assert.Fail("failed to dequeue, expected value to be on queue")
 		}
@@ -30,7 +30,7 @@ func BFS[T comparable](start T, neighbors func(from T) []T, complete func(at T) 
 				copy(newPath, currentPath)
 				newPath[len(currentPath)] = neighbor
 
-				queue.Enqueue(newPath)
+				queue.Push(newPath)
 				visited.Add(neighbor)
 			}
 		}

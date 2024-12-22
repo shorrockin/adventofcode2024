@@ -31,13 +31,13 @@ func Solve(path string, partOne bool) int {
 	})
 
 	queue := utils.NewQueue[Movement]()
-	queue.Enqueue(Movement{start, grid.East})
+	queue.Push(Movement{start, grid.East})
 
 	scores := make(map[Movement]Score)
 	scores[Movement{start, grid.East}] = Score{0, utils.NewSetFrom(start)}
 
 	for !queue.IsEmpty() {
-		origin := queue.MustDequeue()
+		origin := queue.MustPop()
 		movements := []Movement{
 			{origin.position.Offset(origin.facing), origin.facing},
 			{origin.position, origin.facing.TurnLeft()},
@@ -64,7 +64,7 @@ func Solve(path string, partOne bool) int {
 					continue
 				}
 				scores[movement] = scores[origin].step(score, movement.position)
-				queue.Enqueue(movement)
+				queue.Push(movement)
 			}
 		}
 	}

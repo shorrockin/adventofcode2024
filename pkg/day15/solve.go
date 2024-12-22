@@ -29,7 +29,7 @@ func Solve(path string, partOne bool) int {
 	warehouse := parse(path, partOne)
 
 	for !warehouse.movements.IsEmpty() {
-		direction := warehouse.movements.MustDequeue()
+		direction := warehouse.movements.MustPop()
 		warehouse.robot = move(warehouse, warehouse.robot, direction)
 	}
 
@@ -176,13 +176,13 @@ func parse(path string, partOne bool) *Warehouse {
 		for _, char := range line {
 			switch char {
 			case '^':
-				movements.Enqueue(grid.North)
+				movements.Push(grid.North)
 			case '<':
-				movements.Enqueue(grid.West)
+				movements.Push(grid.West)
 			case '>':
-				movements.Enqueue(grid.East)
+				movements.Push(grid.East)
 			case 'v':
-				movements.Enqueue(grid.South)
+				movements.Push(grid.South)
 			default:
 				panic(assert.Fail("unexpected direction", "char", char))
 			}
