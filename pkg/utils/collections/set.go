@@ -26,6 +26,14 @@ func (s Set[T]) Add(value T) {
 	s[value] = true
 }
 
+func (s Set[T]) MaybeAdd(value T) bool {
+	if s.Contains(value) {
+		return false
+	}
+	s.Add(value)
+	return true
+}
+
 func (s Set[T]) AddAll(values ...T) {
 	for _, value := range values {
 		s[value] = true

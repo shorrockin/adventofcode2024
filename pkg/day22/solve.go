@@ -5,6 +5,8 @@ import (
 	"adventofcode2024/pkg/utils/collections"
 )
 
+type Sequence [4]int
+
 const ITERATIONS = 2000
 const PRUNE = 16777216
 
@@ -18,20 +20,19 @@ func PartOne(path string) int {
 }
 
 func PartTwo(path string) int {
-	var deltas [4]int
-	totals := make(map[[4]int]int)
+	totals := make(map[Sequence]int)
 
 	for _, previous := range parse(path) {
-		purchases := collections.NewSet[[4]int]()
+		sequence := [4]int{0, 0, 0, 0}
+		purchases := collections.NewSet[Sequence]()
 
-		for range ITERATIONS {
+		for idx := range ITERATIONS {
 			next := nextSecret(previous)
-			deltas[0], deltas[1], deltas[2], deltas[3] = deltas[1], deltas[2], deltas[3], (next%10)-(previous%10)
+			sequence[0], sequence[1], sequence[2], sequence[3] = sequence[1], sequence[2], sequence[3], (next%10)-(previous%10)
 			previous = next
 
-			if !purchases.Contains(deltas) {
-				purchases.Add(deltas)
-				totals[deltas] += next % 10
+			if idx >= 4 && purchases.MaybeAdd(sequence) {
+				totals[sequence] += next % 10
 			}
 		}
 	}
