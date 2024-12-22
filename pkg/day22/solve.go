@@ -24,13 +24,12 @@ func PartTwo(path string) int {
 	for _, previous := range parse(path) {
 		purchases := collections.NewSet[[4]int]()
 
-		for idx := range ITERATIONS {
+		for range ITERATIONS {
 			next := nextSecret(previous)
-			delta := (next % 10) - (previous % 10)
-			deltas[0], deltas[1], deltas[2], deltas[3] = deltas[1], deltas[2], deltas[3], delta
+			deltas[0], deltas[1], deltas[2], deltas[3] = deltas[1], deltas[2], deltas[3], (next%10)-(previous%10)
 			previous = next
 
-			if !purchases.Contains(deltas) && idx > 4 {
+			if !purchases.Contains(deltas) {
 				purchases.Add(deltas)
 				totals[deltas] += next % 10
 			}
