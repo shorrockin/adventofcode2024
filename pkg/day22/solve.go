@@ -20,17 +20,14 @@ func PartTwo(path string) int {
 	var deltas [4]int
 	totals := make(map[[4]int]int)
 
-	for _, initial := range parse(path) {
-		previous := initial
+	for _, previous := range parse(path) {
 		purchases := make(map[[4]int]int)
 
 		for idx := range ITERATIONS {
 			next := nextSecret(previous)
 			delta := (next % 10) - (previous % 10)
+			deltas[0], deltas[1], deltas[2], deltas[3] = deltas[1], deltas[2], deltas[3], delta
 			previous = next
-
-			deltas[0], deltas[1], deltas[2] = deltas[1], deltas[2], deltas[3]
-			deltas[3] = delta
 
 			if _, exists := purchases[deltas]; !exists && idx > 4 {
 				purchases[deltas] = next % 10
