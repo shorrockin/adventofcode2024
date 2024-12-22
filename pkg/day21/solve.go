@@ -85,8 +85,8 @@ func keypadDirections(keypad *Keypad, from rune, to rune) []string {
 		vertical = grid.North
 	}
 
-	horzAmount := utils.AbsInt(source.X - dest.X)
-	vertAmount := utils.AbsInt(source.Y - dest.Y)
+	horzAmount := utils.Abs(source.X - dest.X)
+	vertAmount := utils.Abs(source.Y - dest.Y)
 
 	out := make([]string, 0, 2)
 
