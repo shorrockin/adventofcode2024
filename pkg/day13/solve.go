@@ -3,6 +3,7 @@ package day13
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/slices"
 	"math"
 	"regexp"
 	"strings"
@@ -19,7 +20,7 @@ type ClawMachine struct {
 }
 
 func Solve(path string, partOne bool) int {
-	return utils.Reduce(parse(path, partOne), 0, func(acc int, machine ClawMachine) int {
+	return slices.Reduce(parse(path, partOne), 0, func(acc int, machine ClawMachine) int {
 		if x, y, ok := solveSystem(machine); ok {
 			if !partOne || (x <= 100 && y <= 100) {
 				return acc + (x * 3) + y
@@ -51,7 +52,7 @@ func parse(path string, partOne bool) []ClawMachine {
 	buttonRegexp := regexp.MustCompile(`Button [A|B]: X\+(\d+), Y\+(\d+)`)
 	prizeRegexp := regexp.MustCompile(`Prize: X=(\d+), Y=(\d+)`)
 
-	return utils.Map(definitions, func(definition string) ClawMachine {
+	return slices.Map(definitions, func(definition string) ClawMachine {
 		lines := strings.Split(definition, "\n")
 		assert.Equal(len(lines), 3, "expected 3 lines in definition")
 

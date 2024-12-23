@@ -4,6 +4,8 @@ import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
+	"adventofcode2024/pkg/utils/maps"
+	"adventofcode2024/pkg/utils/slices"
 )
 
 type Group struct {
@@ -27,7 +29,7 @@ func Solve(path string, partOne bool) int {
 		groups = append(groups, group)
 	}
 
-	return utils.Reduce(groups, 0, func(acc int, group Group) int {
+	return slices.Reduce(groups, 0, func(acc int, group Group) int {
 		multiplier := 0
 		if partOne {
 			multiplier = perimeter(&group)
@@ -45,7 +47,7 @@ func parse(path string) grid.Grid[rune] {
 }
 
 func visit(plots *grid.Grid[rune], source grid.Coord, visited *collections.Set[grid.Coord], group *Group) {
-	neighbors := utils.Filter(source.Cardinals(), func(neighbor grid.Coord) bool {
+	neighbors := slices.Filter(source.Cardinals(), func(neighbor grid.Coord) bool {
 		if visited.Contains(neighbor) {
 			return false
 		}
@@ -67,7 +69,7 @@ func visit(plots *grid.Grid[rune], source grid.Coord, visited *collections.Set[g
 }
 
 func perimeter(group *Group) int {
-	return utils.Reduce(utils.Keys(group.coords), 0, func(acc int, coord grid.Coord) int {
+	return slices.Reduce(maps.Keys(group.coords), 0, func(acc int, coord grid.Coord) int {
 		perimeter := 4
 		neighbors := coord.Cardinals()
 		for _, neighbor := range neighbors {
@@ -81,7 +83,7 @@ func perimeter(group *Group) int {
 
 func corners(group *Group) int {
 	corners := 0
-	for _, coord := range utils.Keys(group.coords) {
+	for _, coord := range maps.Keys(group.coords) {
 		// checks for corner in the north-east, either an outside corner on an inside
 		if !group.coords.Contains(coord.North()) && !group.coords.Contains(coord.East()) {
 			corners++

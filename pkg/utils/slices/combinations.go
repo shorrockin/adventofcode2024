@@ -1,4 +1,4 @@
-package utils
+package slices
 
 func Combinations[T any](data []T, size int) [][]T {
 	var result [][]T

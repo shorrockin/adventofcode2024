@@ -3,6 +3,7 @@ package day04
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/grid"
+	"adventofcode2024/pkg/utils/slices"
 )
 
 type Pattern struct {
@@ -19,7 +20,7 @@ func Solve(path string, partTwo bool) int {
 
 	for _, node := range wordSearch {
 		for _, pattern := range patterns {
-			coordinates := utils.Map(pattern.offsets, func(c grid.Coord) grid.Coord {
+			coordinates := slices.Map(pattern.offsets, func(c grid.Coord) grid.Coord {
 				return node.Coordinate.Offset(c)
 			})
 
@@ -35,7 +36,7 @@ func Solve(path string, partTwo bool) int {
 
 func generatePatterns(partTwo bool) []Pattern {
 	if !partTwo {
-		return utils.Map(grid.Directions, func(direction grid.Coord) Pattern {
+		return slices.Map(grid.Directions, func(direction grid.Coord) Pattern {
 			x := grid.At(0, 0)
 			m := x.Offset(direction)
 			a := m.Offset(direction)
@@ -44,7 +45,7 @@ func generatePatterns(partTwo bool) []Pattern {
 		})
 	}
 
-	return utils.Map([]string{"AMMSS", "ASSMM", "AMSMS", "ASMSM"}, func(value string) Pattern {
+	return slices.Map([]string{"AMMSS", "ASSMM", "AMSMS", "ASMSM"}, func(value string) Pattern {
 		return Pattern{[]grid.Coord{grid.At(0, 0), grid.NorthWest, grid.NorthEast, grid.SouthWest, grid.SouthEast}, value}
 	})
 }

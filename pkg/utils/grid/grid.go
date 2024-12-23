@@ -4,6 +4,7 @@ import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
 	"adventofcode2024/pkg/utils/graph"
+	"adventofcode2024/pkg/utils/slices"
 	"math"
 	"strings"
 )
@@ -67,7 +68,7 @@ func (g Grid[T]) MustGet(coordinate Coord) Node[T] {
 }
 
 func (g Grid[T]) GetAll(coordinates []Coord) []Node[T] {
-	values := utils.MapConditional(coordinates, func(coordinate Coord) (Node[T], bool) {
+	values := slices.MaybeMap(coordinates, func(coordinate Coord) (Node[T], bool) {
 		value, ok := g[coordinate]
 		return value, ok
 	})
@@ -123,8 +124,8 @@ func (g Grid[T]) Width() (int, int) {
 	max := math.MinInt
 	min := math.MaxInt
 	for coordinate := range g {
-		max = utils.MaxValue(coordinate.X, max)
-		min = utils.MinValue(coordinate.X, min)
+		max = utils.Max(coordinate.X, max)
+		min = utils.Min(coordinate.X, min)
 	}
 	return min, max
 }
@@ -133,8 +134,8 @@ func (g Grid[T]) Height() (int, int) {
 	max := math.MinInt
 	min := math.MaxInt
 	for coordinate := range g {
-		max = utils.MaxValue(coordinate.Y, max)
-		min = utils.MinValue(coordinate.Y, min)
+		max = utils.Max(coordinate.Y, max)
+		min = utils.Min(coordinate.Y, min)
 	}
 	return min, max
 }

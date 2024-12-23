@@ -3,6 +3,7 @@ package day17
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/slices"
 	"fmt"
 	"math"
 	"strconv"
@@ -32,7 +33,7 @@ func PartTwo(path string) int {
 		Run(&computer, false)
 
 		if len(computer.program) == len(computer.output) {
-			if utils.EqualSlices(computer.program, computer.output) {
+			if slices.Equals(computer.program, computer.output) {
 				fmt.Printf("found: %v\n", value)
 				return value
 			}
@@ -135,7 +136,7 @@ func parse(path string) Computer {
 		a: utils.MustAtoi(lines[0][12:]),
 		b: utils.MustAtoi(lines[1][12:]),
 		c: utils.MustAtoi(lines[2][12:]),
-		program: utils.Map(strings.Split(lines[4][9:], ","), func(part string) int {
+		program: slices.Map(strings.Split(lines[4][9:], ","), func(part string) int {
 			return utils.MustAtoi(part)
 		}),
 	}

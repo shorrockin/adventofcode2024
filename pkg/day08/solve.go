@@ -5,6 +5,7 @@ import (
 	"adventofcode2024/pkg/utils/assert"
 	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
+	"adventofcode2024/pkg/utils/slices"
 )
 
 func Solve(path string, partOne bool) int {
@@ -23,7 +24,7 @@ func Solve(path string, partOne bool) int {
 	}
 
 	for _, coordinates := range attenas {
-		combinations := utils.Combinations(coordinates, 2)
+		combinations := slices.Combinations(coordinates, 2)
 
 		for _, combination := range combinations {
 			assert.Equal(2, len(combination), "there should only be 2 elements", combination)

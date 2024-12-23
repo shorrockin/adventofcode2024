@@ -1,4 +1,4 @@
-package utils
+package slices
 
 func Permutations[T any](data []T) [][]T {
 	var out [][]T

@@ -4,6 +4,7 @@ import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
+	"adventofcode2024/pkg/utils/slices"
 )
 
 func Solve(path string, partOne bool) int {
@@ -54,7 +55,7 @@ func bfs(guide grid.Grid[int], trailheads []grid.Coord, partOne bool) int {
 
 func neighbors(guide *grid.Grid[int], from grid.Coord) []grid.Coord {
 	base := guide.MustGetContents(from)
-	return utils.Filter(from.Cardinals(), func(neighbor grid.Coord) bool {
+	return slices.Filter(from.Cardinals(), func(neighbor grid.Coord) bool {
 		if value, exists := guide.GetContents(neighbor); exists {
 			return (value - base) == 1
 		}

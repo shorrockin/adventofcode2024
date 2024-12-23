@@ -3,6 +3,8 @@ package day22
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/collections"
+	"adventofcode2024/pkg/utils/maps"
+	"adventofcode2024/pkg/utils/slices"
 )
 
 type Sequence [4]int
@@ -11,7 +13,7 @@ const ITERATIONS = 2000
 const PRUNE = 16777216
 
 func PartOne(path string) int {
-	return utils.Reduce(parse(path), 0, func(accum int, secret int) int {
+	return slices.Reduce(parse(path), 0, func(accum int, secret int) int {
 		for range ITERATIONS {
 			secret = nextSecret(secret)
 		}
@@ -37,7 +39,7 @@ func PartTwo(path string) int {
 		}
 	}
 
-	return utils.MaxMapValue(totals)
+	return maps.MaxValue(totals)
 }
 
 func nextSecret(number int) int {
@@ -48,7 +50,7 @@ func nextSecret(number int) int {
 }
 
 func parse(path string) []int {
-	return utils.Map(utils.MustReadInput(path), func(line string) int {
+	return slices.Map(utils.MustReadInput(path), func(line string) int {
 		return utils.MustAtoi(line)
 	})
 }

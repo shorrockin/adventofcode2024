@@ -2,6 +2,7 @@ package day11
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/slices"
 	"math"
 	"strings"
 )
@@ -14,7 +15,7 @@ type CacheKey struct {
 var cache = make(map[CacheKey]int)
 
 func Solve(raw string, times int) int {
-	return utils.Reduce(parse(raw), 0, func(acc, value int) int {
+	return slices.Reduce(parse(raw), 0, func(acc, value int) int {
 		return acc + produce(value, times)
 	})
 }
@@ -60,7 +61,7 @@ func split(value int) (int, int, bool) {
 }
 
 func parse(raw string) []int {
-	return utils.Map(strings.Fields(raw), func(val string) int {
+	return slices.Map(strings.Fields(raw), func(val string) int {
 		return utils.MustAtoi(val)
 	})
 }

@@ -3,6 +3,7 @@ package day05
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	. "adventofcode2024/pkg/utils/slices"
 	"slices"
 	"strings"
 )
@@ -17,7 +18,7 @@ const (
 func Solve(path string, part Part) int {
 	rules, updates := parse(path)
 
-	return utils.Reduce(updates, 0, func(accum int, update []string) int {
+	return Reduce(updates, 0, func(accum int, update []string) int {
 		for i := 0; i < len(update)-1; i++ {
 			left, right := update[i], update[i+1]
 

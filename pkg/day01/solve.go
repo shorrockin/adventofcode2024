@@ -3,6 +3,7 @@ package day01
 import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
+	. "adventofcode2024/pkg/utils/slices"
 	"math"
 	"slices"
 	"strings"
@@ -41,7 +42,7 @@ func Solve(path string, part Part) int {
 			frequencies[r]++
 		}
 
-		return utils.Reduce(left, 0, func(acc int, l int) int {
+		return Reduce(left, 0, func(acc int, l int) int {
 			return acc + (l * frequencies[l])
 		})
 	}

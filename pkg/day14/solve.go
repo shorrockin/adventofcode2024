@@ -4,6 +4,7 @@ import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
 	"adventofcode2024/pkg/utils/grid"
+	"adventofcode2024/pkg/utils/slices"
 	"regexp"
 )
 
@@ -99,7 +100,7 @@ func display(robots []*Robot, width, height int) {
 
 func parse(path string) []*Robot {
 	parser := regexp.MustCompile(`p=(.*),(.*) v=(.*),(.*)`)
-	return utils.Map(utils.MustReadInput(path), func(line string) *Robot {
+	return slices.Map(utils.MustReadInput(path), func(line string) *Robot {
 		parts := parser.FindStringSubmatch(line)
 		assert.Equal(len(parts), 5, "expected 5 parts in line")
 		return &Robot{

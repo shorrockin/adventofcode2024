@@ -2,6 +2,7 @@ package day07
 
 import (
 	"adventofcode2024/pkg/utils"
+	. "adventofcode2024/pkg/utils/slices"
 	"slices"
 	"strconv"
 	"strings"
@@ -42,11 +43,11 @@ func Solve(path string, partOne bool) int {
 }
 
 func parse(path string) []Equation {
-	return utils.Map(utils.MustReadInput(path), func(line string) Equation {
+	return Map(utils.MustReadInput(path), func(line string) Equation {
 		fields := strings.Fields(line)
 		return Equation{
 			result: utils.MustAtoi(strings.TrimSuffix(fields[0], ":")),
-			input: utils.Map(fields[1:], func(value string) int {
+			input: Map(fields[1:], func(value string) int {
 				return utils.MustAtoi(value)
 			}),
 		}

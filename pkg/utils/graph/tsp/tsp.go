@@ -1,10 +1,11 @@
 package tsp
 
 import (
-	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/assert"
 	"adventofcode2024/pkg/utils/collections"
 	. "adventofcode2024/pkg/utils/graph"
+	"adventofcode2024/pkg/utils/maps"
+	"adventofcode2024/pkg/utils/slices"
 	"math"
 )
 
@@ -34,8 +35,8 @@ func NewPath[T comparable](shortest bool) *TSPPath[T] {
 
 func (p *TSPPath[T]) Copy() *TSPPath[T] {
 	return &TSPPath[T]{
-		nodes:     utils.CopySlice(p.nodes),
-		distances: utils.CopyMap(p.distances),
+		nodes:     slices.Copy(p.nodes),
+		distances: maps.Copy(p.distances),
 		distance:  p.distance,
 		visited:   p.visited.Copy(),
 	}

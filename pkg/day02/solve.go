@@ -2,16 +2,17 @@ package day02
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/slices"
 	"strings"
 )
 
 func Solve(path string, allowSkip bool) int {
-	reports := utils.Map(utils.MustReadInput(path), func(line string) []int {
+	reports := slices.Map(utils.MustReadInput(path), func(line string) []int {
 		parts := strings.Fields(line)
-		return utils.Map(parts, utils.MustAtoi)
+		return slices.Map(parts, utils.MustAtoi)
 	})
 
-	return utils.Count(reports, func(report []int) bool {
+	return slices.Count(reports, func(report []int) bool {
 		if allowSkip {
 			return isSafeWithSkip(report)
 		}

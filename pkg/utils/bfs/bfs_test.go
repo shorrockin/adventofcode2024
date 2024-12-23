@@ -1,8 +1,8 @@
 package bfs
 
 import (
-	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/graph"
+	"adventofcode2024/pkg/utils/maps"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,7 +18,7 @@ func TestBFS(t *testing.T) {
 	g.AddEdge("E", "F", 1)
 
 	neighbors := func(node string) []string {
-		return utils.Keys(g.Edges[node])
+		return maps.Keys(g.Edges[node])
 	}
 
 	complete := func(node string) bool {

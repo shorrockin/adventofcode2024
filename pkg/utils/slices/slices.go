@@ -1,9 +1,53 @@
-package utils
+package slices
 
 import (
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/collections"
+
 	"golang.org/x/exp/constraints"
 )
+
+func Copy[T any](original []T) []T {
+	copied := make([]T, len(original))
+	copy(copied, original)
+	return copied
+}
+
+func Equals[T comparable](a, b []T) bool {
+	if len(a) != len(b) {
+		return false
+	}
+
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+func Remove[T comparable](slice []T, item T) []T {
+	for i, v := range slice {
+		if v == item {
+			return append(slice[:i], slice[i+1:]...)
+		}
+	}
+	return slice
+}
+
+func Intersection[T comparable](left, right []T) []T {
+	result := []T{}
+	set := collections.NewSetFrom(left...)
+
+	for _, item := range right {
+		if set.Contains(item) {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
 
 func Map[T any, K any](data []T, mapper func(T) K) []K {
 	result := make([]K, len(data))
@@ -13,7 +57,7 @@ func Map[T any, K any](data []T, mapper func(T) K) []K {
 	return result
 }
 
-func MapConditional[T any, K any](data []T, mapper func(T) (K, bool)) []K {
+func MaybeMap[T any, K any](data []T, mapper func(T) (K, bool)) []K {
 	result := make([]K, 0, len(data))
 	for _, element := range data {
 		value, ok := mapper(element)
@@ -54,46 +98,6 @@ func Max[T constraints.Ordered](input []T) T {
 	return best
 }
 
-func MaxMapValue[K comparable, V constraints.Ordered](input map[K]V) V {
-	var zero V
-	if len(input) == 0 {
-		return zero
-	}
-
-	best := zero
-	for _, value := range input {
-		if value > best {
-			best = value
-		}
-	}
-
-	return best
-}
-
-func MaxValue[T constraints.Ordered](left T, right T) T {
-	if left > right {
-		return left
-	}
-	return right
-}
-
-func MinValue[T constraints.Ordered](left T, right T) T {
-	if left < right {
-		return left
-	}
-	return right
-}
-
-func Find[T any](input []T, selector func(T) bool) T {
-	for _, value := range input {
-		if selector(value) {
-			return value
-		}
-	}
-	var zero T
-	return zero
-}
-
 func Count[T any](input []T, selector func(T) bool) int {
 	count := 0
 	for _, value := range input {
@@ -124,16 +128,6 @@ func Filter[T any](input []T, selector func(T) bool) []T {
 	return out
 }
 
-func FilterMap[K comparable, V any](input map[K]V, selector func(key K, value V) bool) map[K]V {
-	out := make(map[K]V)
-	for key, value := range input {
-		if selector(key, value) {
-			out[key] = value
-		}
-	}
-	return out
-}
-
 func Reduce[T any, K any](input []T, initial K, reducer func(current K, next T) K) K {
 	for _, value := range input {
 		initial = reducer(initial, value)
@@ -158,4 +152,14 @@ func Chunk[T any](input []T, size int) [][]T {
 		out = append(out, input[i*size:last:last])
 	}
 	return out
+}
+
+func Find[T any](input []T, selector func(T) bool) T {
+	for _, value := range input {
+		if selector(value) {
+			return value
+		}
+	}
+	var zero T
+	return zero
 }

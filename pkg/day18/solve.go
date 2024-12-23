@@ -6,6 +6,7 @@ import (
 	"adventofcode2024/pkg/utils/astar"
 	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/grid"
+	"adventofcode2024/pkg/utils/slices"
 	"strings"
 )
 
@@ -34,7 +35,7 @@ func ShortestPath(bytes map[grid.Coord]int, width, height, time int) int {
 	end := grid.At(width, height)
 
 	neighbors := func(from *collections.Node[grid.Coord]) []grid.Coord {
-		return utils.Filter(from.Contents.Cardinals(), func(pos grid.Coord) bool {
+		return slices.Filter(from.Contents.Cardinals(), func(pos grid.Coord) bool {
 			if byteTime, ok := bytes[pos]; ok && byteTime < time {
 				return false
 			}
@@ -56,7 +57,7 @@ func ShortestPath(bytes map[grid.Coord]int, width, height, time int) int {
 }
 
 func parse(path string) map[grid.Coord]int {
-	bytes := utils.Map(utils.MustReadInput(path), func(line string) grid.Coord {
+	bytes := slices.Map(utils.MustReadInput(path), func(line string) grid.Coord {
 		parts := strings.Split(line, ",")
 		assert.Equal(2, len(parts), "expected two parts to each coordinate")
 		return grid.Coord{X: utils.MustAtoi(parts[0]), Y: utils.MustAtoi(parts[1])}

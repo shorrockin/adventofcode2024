@@ -4,6 +4,8 @@ import (
 	"adventofcode2024/pkg/utils"
 	"adventofcode2024/pkg/utils/collections"
 	"adventofcode2024/pkg/utils/graph"
+	"adventofcode2024/pkg/utils/maps"
+	slice "adventofcode2024/pkg/utils/slices"
 	"slices"
 	"strings"
 )
@@ -14,9 +16,7 @@ func PartOne(path string) int {
 	count := 0
 
 	for source, weights := range lan.Edges {
-		neighbors := utils.Keys(weights)
-
-		for _, combo := range utils.Combinations(neighbors, 2) {
+		for _, combo := range slice.Combinations(maps.Keys(weights), 2) {
 			if lan.Connected(combo[0], combo[1]) {
 				set := [3]string{source, combo[0], combo[1]}
 				slices.Sort(set[:])
@@ -64,10 +64,10 @@ func findClusters(lan *graph.Graph[string], workset, potentials []string, cluste
 		findClusters(
 			lan,
 			append(workset, computer),
-			utils.Intersection(potentials, connections),
+			slice.Intersection(potentials, connections),
 			clusters,
 		)
-		potentials = utils.Remove(potentials, computer)
+		potentials = slice.Remove(potentials, computer)
 	}
 
 	return clusters

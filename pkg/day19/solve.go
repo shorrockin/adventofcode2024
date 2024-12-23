@@ -2,6 +2,7 @@ package day19
 
 import (
 	"adventofcode2024/pkg/utils"
+	"adventofcode2024/pkg/utils/slices"
 	"strings"
 )
 
@@ -9,7 +10,7 @@ func Solve(path string, partOne bool) int {
 	patterns, designs := parse(path)
 	cache := make(map[string]int)
 
-	return utils.Reduce(designs, 0, func(acc int, design string) int {
+	return slices.Reduce(designs, 0, func(acc int, design string) int {
 		count := CountPatterns(design, &patterns, cache)
 		if partOne && count > 0 {
 			count = 1
