@@ -2,6 +2,7 @@ package utils
 
 import (
 	"adventofcode2024/pkg/utils/assert"
+	"adventofcode2024/pkg/utils/collections"
 	"bufio"
 	"log"
 	"os"
@@ -107,6 +108,28 @@ func Abs[T int | int64](value T) T {
 		return -value
 	}
 	return value
+}
+
+func Remove[T comparable](slice []T, item T) []T {
+	for i, v := range slice {
+		if v == item {
+			return append(slice[:i], slice[i+1:]...)
+		}
+	}
+	return slice
+}
+
+func Intersection[T comparable](left, right []T) []T {
+	result := []T{}
+	set := collections.NewSetFrom(left...)
+
+	for _, item := range right {
+		if set.Contains(item) {
+			result = append(result, item)
+		}
+	}
+
+	return result
 }
 
 func ClearScreen() {

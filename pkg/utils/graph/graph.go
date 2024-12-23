@@ -16,6 +16,14 @@ func NewGraph[T comparable]() *Graph[T] {
 	}
 }
 
+func (g *Graph[T]) ConnectedTo(from T) []T {
+	keys := make([]T, 0, len(g.Edges[from]))
+	for key := range g.Edges[from] {
+		keys = append(keys, key)
+	}
+	return keys
+}
+
 // add's a directed edge between two nodes in the graph
 func (g *Graph[T]) AddEdge(from T, to T, weight float64) {
 	if g.Edges[from] == nil {
@@ -49,11 +57,16 @@ func (g Graph[T]) Exists(from T, to T) bool {
 
 // returns the distance between the two edges, or -1, false if it
 // doesn't exist
-func (g Graph[T]) Distance(from T, to T) (float64, bool) {
+func (g Graph[T]) Distance(from, to T) (float64, bool) {
 	if !g.Exists(from, to) {
 		return -1, false
 	}
 	return g.Edges[from][to], true
+}
+
+func (g Graph[T]) Connected(from, to T) bool {
+	_, connected := g.Distance(from, to)
+	return connected
 }
 
 // returns the total number of unique nodes in this graph as
@@ -62,4 +75,8 @@ func (g Graph[T]) Distance(from T, to T) (float64, bool) {
 // map size is 1
 func (g Graph[T]) NodeCount() int {
 	return len(g.Nodes)
+}
+
+func (g *Graph[T]) Values() []T {
+	return g.Nodes.Values()
 }
