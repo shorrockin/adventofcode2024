@@ -19,7 +19,7 @@ var AllowBacktrack Configurator = func(p *Preference) {
 	p.allowBacktrack = true
 }
 
-func AStar[T comparable](start, end T, neighbors func(node *collections.Node[T]) []T, heuristic func(node T, from *collections.Node[T]) float64, configs ...Configurator) []T {
+func AStar[T comparable](start, end T, neighbors func(node *collections.PqNode[T]) []T, heuristic func(node T, from *collections.PqNode[T]) float64, configs ...Configurator) []T {
 	preferences := &Preference{
 		allowBacktrack: false,
 		includeStart:   true,

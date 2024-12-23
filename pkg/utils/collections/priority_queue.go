@@ -2,29 +2,29 @@ package collections
 
 import "container/heap"
 
-type Node[T comparable] struct {
+type PqNode[T comparable] struct {
 	Contents  T
 	Priority  float64
-	Parent    *Node[T]
+	Parent    *PqNode[T]
 	PathDepth int
 }
 
-func NewNode[T comparable](contents T, priority float64, parent *Node[T]) *Node[T] {
+func NewPqNode[T comparable](contents T, priority float64, parent *PqNode[T]) *PqNode[T] {
 	depth := 0
 	if parent != nil {
 		depth = parent.PathDepth + 1
 	}
-	return &Node[T]{Contents: contents, Priority: priority, Parent: parent, PathDepth: depth}
+	return &PqNode[T]{Contents: contents, Priority: priority, Parent: parent, PathDepth: depth}
 }
 
-type Heap[T comparable] []*Node[T]
+type Heap[T comparable] []*PqNode[T]
 
 func (pq Heap[T]) Len() int           { return len(pq) }
 func (pq Heap[T]) Less(i, j int) bool { return pq[i].Priority < pq[j].Priority }
 func (pq Heap[T]) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
 
 func (pq *Heap[T]) Push(x any) {
-	item := x.(*Node[T])
+	item := x.(*PqNode[T])
 	*pq = append(*pq, item)
 }
 
@@ -41,16 +41,16 @@ type PriorityQueue[T comparable] struct {
 	heap Heap[T]
 }
 
-func (pq *PriorityQueue[T]) Push(contents T, priority float64, parent *Node[T]) {
-	heap.Push(&pq.heap, NewNode(contents, priority, parent))
+func (pq *PriorityQueue[T]) Push(contents T, priority float64, parent *PqNode[T]) {
+	heap.Push(&pq.heap, NewPqNode(contents, priority, parent))
 }
 
 func (pq *PriorityQueue[T]) Pop() T {
 	return pq.PopNode().Contents
 }
 
-func (pq *PriorityQueue[T]) PopNode() *Node[T] {
-	return heap.Pop(&pq.heap).(*Node[T])
+func (pq *PriorityQueue[T]) PopNode() *PqNode[T] {
+	return heap.Pop(&pq.heap).(*PqNode[T])
 }
 
 func (pq *PriorityQueue[T]) Len() int {
